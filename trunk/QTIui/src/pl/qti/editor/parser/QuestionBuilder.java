@@ -1,0 +1,79 @@
+package pl.qti.editor.parser;
+import java.io.File;
+import java.text.ParseException;
+import java.util.HashMap;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import pl.qti.editor.question.factory.AbstractQuestionFactory;
+import pl.qti.editor.question.factory.SingleChoiceFactory;
+import pl.wiecek.qti.gui.AbstractQuestionPanel;
+
+
+
+public class QuestionBuilder {
+
+	private final static String recognitionTag = "responseDeclaration";
+	private final static String recAttrCard = "cardinality";
+	private final static String recAttrType = "baseType";
+	private static HashMap<String, Integer> values = null;
+	
+	public static AbstractQuestionPanel buildQuestion(File questionFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, ParseException
+		{
+			ParserWrapper parser = (ParserWrapper)Class.forName("pl.qti.editor.parser.Xerces").newInstance();	
+			Document document = null;
+	        try {
+				document = parser.parse(questionFile.getAbsolutePath());
+			} catch (Exception e) {
+				// logger
+			}
+	        NodeList elements = document.getElementsByTagName(recognitionTag);
+	        NamedNodeMap attributes = elements.item(0).getAttributes();
+	        Node attrCard = attributes.getNamedItem(recAttrCard);
+	        Node attrType = attributes.getNamedItem(recAttrType);
+	        
+	        AbstractQuestionFactory questionFactory = null;
+	        
+	        switch(getValues().get(attrCard.getNodeValue()+"."+attrType.getNodeValue()))
+	        {
+	        	case 0:
+	        		questionFactory = new SingleChoiceFactory();
+	        		// create Single choice question factory http://www.imsglobal.org/question/qti_v2p0/examples/items/choice.xml
+	        		break;
+	        	case 1:
+		        	// create Multiple choice question factory http://www.imsglobal.org/question/qti_v2p0/examples/items/choice_multiple.xml
+		        	break;
+	        	case 2:
+	        		// create Ordered choice question factory http://www.imsglobal.org/question/qti_v2p0/examples/items/order.xml
+	        		break;
+	        	case 3:
+	        		// create Multiple Pair question factory http://www.imsglobal.org/question/qti_v2p0/examples/items/associate.xml
+	        		break;
+	        	case 4:
+	        		// create Text question factory http://www.imsglobal.org/question/qti_v2p0/examples/items/extended_text.xml
+	        		break;
+	        	default:
+	        		throw new ParseException("Provided file does not contain proper QTI question!", 0);
+	        		
+	        }
+			return questionFactory.makeQuestion(document);
+
+		}
+	
+	private static HashMap<String, Integer> getValues()
+	{
+		if(values==null)
+		{
+			values = new HashMap<String, Integer>();
+			values.put("single.identifier", 0);
+			values.put("multiple.identifier", 1);
+			values.put("ordered.identifier", 2);
+			values.put("multiple.pair", 3);
+			values.put("single.string", 4);
+		}
+		return values;
+	}
+}
