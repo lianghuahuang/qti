@@ -5,17 +5,28 @@ import java.awt.BorderLayout;
 
 import javax.swing.JTextArea;
 import java.awt.Font;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import java.awt.ComponentOrientation;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public abstract class AbstractQuestionPanel extends JPanel {
+public abstract class AbstractQuestionPanel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JTextArea jTextArea = null;
@@ -23,12 +34,18 @@ public abstract class AbstractQuestionPanel extends JPanel {
 	private JLabel SouthLabel = null;
 	private JScrollPane scrollPane = null;
 	private JPanel NPanel = null;
+	private JPanel newQuestionNamePanel = null;
+	private JLabel newNameLabel = null;
+	private JTextField newNameTextField = null;
+	private JButton newNameButton = null;
+	private QTIEditor editor = null;
 
 	/**
 	 * This is the default constructor
 	 */
-	public AbstractQuestionPanel() {
+	public AbstractQuestionPanel(QTIEditor editor) {
 		super();
+		this.editor = editor;
 		initialize();
 	}
 
@@ -38,7 +55,7 @@ public abstract class AbstractQuestionPanel extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
-		SouthLabel = new JLabel();
+		SouthLabel = new JLabel("BLE BLE BLE");
 		titleLabel = new JLabel("QUESTION");
 		titleLabel.setHorizontalAlignment(JLabel.CENTER);
 		titleLabel.setFont(new Font("DialogInput", Font.BOLD, 14));
@@ -53,11 +70,10 @@ public abstract class AbstractQuestionPanel extends JPanel {
 		NPanel.add(new JLabel("                "), BorderLayout.EAST);
 		NPanel.add(new JLabel("                "), BorderLayout.WEST);
 		SouthLabel.setPreferredSize(new Dimension(710, 24));
-		NPanel.add(SouthLabel, BorderLayout.SOUTH);
+		NPanel.add(getNewQuestionNamePanel(), BorderLayout.SOUTH);
 		
 		this.setLayout(new BorderLayout());
 		this.setSize(705, 500);
-		this.setBackground(new Color(153, 204, 255));
 		this.add(NPanel, BorderLayout.NORTH);
 	}
 
@@ -93,6 +109,58 @@ public abstract class AbstractQuestionPanel extends JPanel {
 			scrollPane.setVisible(true);
 		}
 		return scrollPane;
+	}
+	
+	/**
+	 * This method initializes jTextField	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getNewNameJTextField() {
+		if (newNameTextField == null) {
+			newNameTextField = new JTextField();
+			newNameTextField.setPreferredSize(new Dimension(360, 20));
+		}
+		return newNameTextField;
+	}
+
+	/**
+	 * This method initializes jButton	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getNewNameJButton() {
+		if (newNameButton == null) {
+			newNameButton = new JButton();
+			newNameButton.setText("CHANGE NAME");
+			newNameButton.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e) 
+				{
+					DefaultListModel model = (DefaultListModel)editor.getQuestionsList().getModel();
+					model.setElementAt(newNameTextField.getText(), editor.getCurrentSelected());
+				 }	
+			});
+		}
+		return newNameButton;
+	}
+	
+	private JPanel getNewQuestionNamePanel() {
+		newQuestionNamePanel = new JPanel();
+		newQuestionNamePanel.setBackground(new Color(221, 236, 251));
+		FlowLayout flowLayout = new FlowLayout();
+		flowLayout.setHgap(21);
+		flowLayout.setAlignment(java.awt.FlowLayout.CENTER);
+		flowLayout.setVgap(11);
+		newNameLabel = new JLabel();
+		newNameLabel.setText("Insert new question name");
+		newNameLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		newQuestionNamePanel.setLayout(flowLayout);
+		newQuestionNamePanel.setSize(new Dimension(710, 44));
+		newQuestionNamePanel.add(newNameLabel, null);
+		newQuestionNamePanel.add(getNewNameJTextField(), null);
+		newQuestionNamePanel.add(getNewNameJButton(), null);
+		return newQuestionNamePanel;
 	}
 
 	// ABSTRACT METHODS - need to implement in subclasses

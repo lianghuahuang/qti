@@ -29,19 +29,21 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 	private JScrollPane jScrollPane;  //  @jve:decl-index=0:visual-constraint="96,118"
 	private JPanel description,info, jPanel;
 	private JCheckBox shuffleBox;
+	private JButton addChoice;
 	private JLabel nrLabel, shuffleLabel, correct, score, choiceText;
 	private ArrayList<AnswerPanel> choiceList= new ArrayList<AnswerPanel>();  //  @jve:decl-index=0:
 	private int answerCount;
 	private int position = 80;
 	private final int height = 45;
+	private static final int MAX_QUESTIONS = 10;
 	
 	
 	/**
 	 * This method initializes 
 	 * 
 	 */
-	public SimpleChoiceQuestion() {
-		super();
+	public SimpleChoiceQuestion(QTIEditor editor) {
+		super(editor);
 		initialize();
 	}
 
@@ -205,7 +207,7 @@ private JPanel getDescJPanel() {
 		shuffleLabel.setHorizontalTextPosition(SwingConstants.LEFT);
 		shuffleLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		description.add(shuffleLabel, null);
-		JButton addChoice = new JButton("Add choice");
+	    addChoice = new JButton("Add choice");
 		addChoice.addActionListener(this);
 		description.add(addChoice, null);
 		description.setLocation(0, 0);
@@ -215,11 +217,9 @@ private JPanel getDescJPanel() {
 
 @Override
 public void actionPerformed(ActionEvent e) {
-	if(answerCount < 10)
-		addAnswers(1);
-	else
-		JOptionPane.showMessageDialog(null, "Sorry ... You can add only 10 answers", "WARNING", JOptionPane.INFORMATION_MESSAGE);
-	
-}
-	
+		if(answerCount < MAX_QUESTIONS)
+			addAnswers(1);
+		else
+			JOptionPane.showMessageDialog(null, "Sorry ... You can add only 10 answers", "WARNING", JOptionPane.INFORMATION_MESSAGE);
+ }	
 }  //  @jve:decl-index=0:visual-constraint="64,82"
