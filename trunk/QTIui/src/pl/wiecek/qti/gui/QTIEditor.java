@@ -3,6 +3,7 @@ package pl.wiecek.qti.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Event;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -10,6 +11,7 @@ import java.awt.TextArea;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,7 +23,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JMenuBar;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -34,6 +38,7 @@ import javax.swing.plaf.basic.BasicPopupMenuUI;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -47,8 +52,13 @@ import javax.swing.SwingConstants;
 
 import pl.wiecek.qti.utils.ComboBoxValues;
 import pl.wiecek.qti.utils.ClassLoader;
+import pl.wiecek.qti.utils.XMLDirectoryFilter;
+import pl.wiecek.qti.utils.XMLFileFilter;
+
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.awt.ComponentOrientation;
+import java.io.File;
 
 public class QTIEditor extends JFrame implements MouseListener, ListSelectionListener, ActionListener{
 
@@ -57,16 +67,16 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	private JMenuBar jJMenuBar;
 	private JMenu jMenu;
 	private JMenu jMenu1;
-	private JMenuItem jMenuItem;
-	private JMenuItem jMenuItem1;
+	private JMenuItem saveItem;
+	private JMenuItem exitItem;
 	private JPanel jPanel;
 	private JPanel jPanel2;
 	private JTabbedPane jTabbedPane;
-	private JList jList;
+	private JList questionsList;
 	private JScrollPane jScrollPane;
 	private  JPopupMenu Pmenu;
-	private JMenuItem menuItem;
-	private JMenuItem menuItem2;
+	private JMenuItem delete;
+	private JMenuItem saveToXML;
 	private JPanel mainPanel;
 	private JPanel menuMainPanel1;
 	private JLabel QTILabel;
@@ -81,6 +91,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	private JButton add2jButton;
 	private JLabel numberLabel = null;
 	private JComboBox numberComboBox = null;
+	private JFileChooser fc;
 	
 	// list of added questions
 	private ArrayList<AbstractQuestionPanel> questionList= new ArrayList<AbstractQuestionPanel>(); 
@@ -91,11 +102,17 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	// Dialog that display example question usage
 	private QuestionExampleDialog questionExample;
 	// type of current added question
-	private String questionType = ComboBoxValues.QUESTION_TYPES.get(0);
+	private String questionType = ComboBoxValues.QUESTION_TYPES.get(0);  //  @jve:decl-index=0:
 	// index of current selected question
 	private int currentSelected = -1;
 	// tell us if we have selected question
 	private boolean selected = true;
+	// LOOK AND FEEL
+	private final static String LAF = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";  //  @jve:decl-index=0:
+	private JMenuItem openItem = null;
+	private JMenuItem saveSelectedItem = null;
+	private JMenuItem newQuestionItem = null;
+	private JMenuItem exitEditorItem = null;
 
 	
 	/**
@@ -121,17 +138,21 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		this.setContentPane(getJContentPane());
 		this.setTitle("QTI Editor");
 		this.createPopupMenu();
+		// JFileChooser initialization
+		fc = new JFileChooser();
+		fc.setMultiSelectionEnabled(true);
+		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		fc.setDragEnabled(true);
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
+            UIManager.setLookAndFeel(LAF);
+            SwingUtilities.updateComponentTreeUI(fc);
+          } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null,
+                "Can't change look and feel",
+                "Invalid PLAF",
+                JOptionPane.ERROR_MESSAGE);
+          }
+          fc.addChoosableFileFilter(new XMLFileFilter());
 	}
 
 	/**
@@ -173,7 +194,13 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		if (jMenu == null) {
 			jMenu = new JMenu();
 			jMenu.setText("File");
+			jMenu.add(getNewQuestionItem());
+			jMenu.add(getOpenItem());
+			jMenu.addSeparator();
 			jMenu.add(getJMenuItem());
+			jMenu.add(getSaveSelectedItem());
+			jMenu.addSeparator();
+			jMenu.add(getExitEditorItem());
 		}
 		return jMenu;
 	}
@@ -186,7 +213,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	private JMenu getJMenu1() {
 		if (jMenu1 == null) {
 			jMenu1 = new JMenu();
-			jMenu1.setText("Window");
+			jMenu1.setText("Help");
 			jMenu1.add(getJMenuItem1());
 		}
 		return jMenu1;
@@ -198,11 +225,16 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	 * @return javax.swing.JMenuItem	
 	 */
 	private JMenuItem getJMenuItem() {
-		if (jMenuItem == null) {
-			jMenuItem = new JMenuItem();
-			jMenuItem.setText("Save");
+		if (saveItem == null) {
+			saveItem = new JMenuItem();
+			saveItem.setText("Save ALL");
+			saveItem.setHorizontalAlignment(SwingConstants.LEFT);
+			saveItem.setHorizontalTextPosition(SwingConstants.LEFT);
+			saveItem.setPreferredSize(new Dimension(119, 19));
+			saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK, false));
+			saveItem.addActionListener(this);
 		}
-		return jMenuItem;
+		return saveItem;
 	}
 
 	/**
@@ -211,11 +243,11 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	 * @return javax.swing.JMenuItem	
 	 */
 	private JMenuItem getJMenuItem1() {
-		if (jMenuItem1 == null) {
-			jMenuItem1 = new JMenuItem();
-			jMenuItem1.setText("Exit");
+		if (exitItem == null) {
+			exitItem = new JMenuItem();
+			exitItem.setText("Exit");
 		}
-		return jMenuItem1;
+		return exitItem;
 	}
 
 	/**
@@ -274,19 +306,19 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	 */
 	private JList getJList() {
 	    DefaultListModel model = new DefaultListModel();
-		if (jList == null) {
-			jList = new JList(model);
+		if (questionsList == null) {
+			questionsList = new JList(model);
 			
-			jList.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 10));
-			jList.setForeground(Color.black);
-			jList.setBackground(SystemColor.info);
-			jList.setFixedCellHeight(22);
-			jList.setFixedCellWidth(200);
-			jList.setAutoscrolls(true);
-			jList.addMouseListener(this);
-			jList.addListSelectionListener(this);
+			questionsList.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 10));
+			questionsList.setForeground(Color.black);
+			questionsList.setBackground(SystemColor.info);
+			questionsList.setFixedCellHeight(22);
+			questionsList.setFixedCellWidth(200);
+			questionsList.setAutoscrolls(true);
+			questionsList.addMouseListener(this);
+			questionsList.addListSelectionListener(this);
 		}
-		return jList;
+		return questionsList;
 	}
 
 	/**
@@ -307,8 +339,9 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		 if ((arg0.getClickCount() == 2) && (arg0.getButton() == MouseEvent.BUTTON1) && (questionList.size() != 0)) 
 		 {
 			jTabbedPane.removeAll();
-			currentSelected = jList.getSelectedIndex();
-			jTabbedPane.addTab((String)jList.getSelectedValue(), questionList.get(currentSelected));
+			currentSelected = questionsList.getSelectedIndex();
+			insertedQestion = questionList.get(currentSelected);
+			jTabbedPane.addTab(insertedQestion.getQuestionType(), insertedQestion);
 		 }
 	}
 	@Override
@@ -325,13 +358,13 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 			 if ( arg0.isPopupTrigger() && arg0.getButton() == MouseEvent.BUTTON3 ) 
 			 {
 				 Point p = arg0.getPoint();
-				 int index = jList.locationToIndex(p);
+				 int index = questionsList.locationToIndex(p);
 				 if(index != -1)
 				 {
-					 Rectangle rec = jList.getCellBounds(index, index);
+					 Rectangle rec = questionsList.getCellBounds(index, index);
 					 if(rec.contains(p))
 					 {
-						 jList.setSelectedIndex(index);
+						 questionsList.setSelectedIndex(index);
 						 Pmenu.show(arg0.getComponent(), arg0.getX(), arg0.getY());
 					 }
 				 }
@@ -344,22 +377,22 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		 Pmenu.setUI(new BasicPopupMenuUI());
 		 Pmenu.updateUI();
 		 Pmenu.setFont(new Font("DejaVu Serif", Font.PLAIN, 8));
-		 menuItem = new JMenuItem("Delete");
-		 menuItem.setBackground(new Color(204, 204, 255));
-		 menuItem.setIcon(new ImageIcon(getClass().getResource("/icons/delete-16x16.gif")));
-		 Pmenu.add(menuItem);
-		 menuItem.addActionListener(new ActionListener(){
+		 delete = new JMenuItem("Delete");
+		 delete.setBackground(SystemColor.scrollbar);
+		 delete.setIcon(new ImageIcon(getClass().getResource("/icons/delete-16x16.gif")));
+		 Pmenu.add(delete);
+		 delete.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent e)
 		      {
 		    	  deleteQuestion();
 		      }
 		      });
 		 Pmenu.addSeparator();
-		 menuItem2 = new JMenuItem("Save to XML");
-		 menuItem2.setBackground(new Color(204, 204, 255));
-		 menuItem2.setIcon(new ImageIcon(getClass().getResource("/icons/icon-save.gif")));
-		 Pmenu.add(menuItem2);
-		 menuItem2.addActionListener(new ActionListener(){
+		 saveToXML = new JMenuItem("Save to XML");
+		 saveToXML.setBackground(SystemColor.scrollbar);
+		 saveToXML.setIcon(new ImageIcon(getClass().getResource("/icons/icon-save.gif")));
+		 Pmenu.add(saveToXML);
+		 saveToXML.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent e)
 		      {
 		    	  System.out.println("SAVE TO XML"); 
@@ -395,7 +428,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 
 	private void deleteQuestion()
 	{
-		int selectedPosition = jList.getSelectedIndex();
+		int selectedPosition = questionsList.getSelectedIndex();
 		// if there not exist any question - show info
 		if(selectedPosition == -1)
 		{
@@ -403,7 +436,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		}
 		else
 		{
-			 DefaultListModel  m = (DefaultListModel) jList.getModel();
+			 DefaultListModel  m = (DefaultListModel) questionsList.getModel();
 			 m.remove(selectedPosition);
 			 questionList.remove(selectedPosition);
 			 // if deleted tab is now open - close it
@@ -427,18 +460,18 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		else if(source == add2jButton)
 		{
 			// use reflection API to create concrete class
-			insertedQestion = ClassLoader.createQuestion(ComboBoxValues.QUESTION_ALIASES.get(questionType));
+			insertedQestion = ClassLoader.createQuestion(ComboBoxValues.QUESTION_ALIASES.get(questionType), this);
 			insertedQestion.addAnswers(answersNumber);
 			questionList.add(insertedQestion);
 			// add question to JList 
-			DefaultListModel  model = (DefaultListModel) jList.getModel();
+			DefaultListModel  model = (DefaultListModel) questionsList.getModel();
 			model.addElement(insertedQestion.getQuestionType());
 		    // add question to JTabbedPane
 			jTabbedPane.removeAll();
 			jTabbedPane.addTab(insertedQestion.getQuestionType(), insertedQestion);
 			currentSelected = questionList.size() - 1;
 			selected = true;
-			jList.setSelectedIndex(questionList.size() - 1);
+			questionsList.setSelectedIndex(questionList.size() - 1);
 		}
 		else if(source == numberComboBox)
 		{
@@ -462,6 +495,60 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 			questionExample.setVisible(true);
 			questionExample.setSize(new Dimension(640, 405));
 		}
+		else if(source == openItem)
+		{
+			openFiles();
+		}
+		else if(source == saveItem)
+		{
+			saveFile();
+		}
+		else if(source == saveSelectedItem)
+		{
+			for(int sel : questionsList.getSelectedIndices())
+			{
+				System.out.println(sel);
+			}
+		}
+		else if(source == exitEditorItem)
+		{
+			this.dispose();
+			System.exit(0);
+		}
+	}
+
+	private void openFiles() {
+
+		int returnVal = fc.showOpenDialog(QTIEditor.this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) 
+        {
+        	
+            File[] file = fc.getSelectedFiles();
+            System.out.println(file.length);
+            for(File f : file)
+            {
+            	if(f.isDirectory())
+            	{
+            		for(File f2 : f.listFiles(new XMLDirectoryFilter()))
+                    {
+            			System.out.println("FILE " + f2.getAbsolutePath());
+                    }
+            	}
+            	else
+            		 System.out.println("FILE" + f.getAbsolutePath());
+            		
+            }
+        } else {
+        }
+
+		
+	}
+
+	private void saveFile() {
+
+
+		
 	}
 
 	/**
@@ -603,11 +690,83 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		return numberComboBox;
 	}
 
+	/**
+	 * This method initializes openItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getOpenItem() {
+		if (openItem == null) {
+			openItem = new JMenuItem();
+			openItem.setText("Open");
+			openItem.setHorizontalAlignment(SwingConstants.LEFT);
+			openItem.setHorizontalTextPosition(SwingConstants.LEFT);
+			openItem.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+			openItem.setPreferredSize(new Dimension(199, 19));
+			openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK, false));
+			openItem.addActionListener(this);
+		}
+		return openItem;
+	}
+	
+	public JList getQuestionsList(){
+		return questionsList;
+	}
+
+	public int getCurrentSelected() {
+		return currentSelected;
+	}
+
+	/**
+	 * This method initializes saveSelectedItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getSaveSelectedItem() {
+		if (saveSelectedItem == null) {
+			saveSelectedItem = new JMenuItem();
+			saveSelectedItem.setText("Save SELECTED");
+			saveSelectedItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK, false));
+			saveSelectedItem.addActionListener(this);
+		}
+		return saveSelectedItem;
+	}
+
+	/**
+	 * This method initializes newQuestionItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getNewQuestionItem() {
+		if (newQuestionItem == null) {
+			newQuestionItem = new JMenuItem();
+			newQuestionItem.setText("New");
+			newQuestionItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK, false));
+			newQuestionItem.addActionListener(this);
+		}
+		return newQuestionItem;
+	}
+
+	/**
+	 * This method initializes exitEditorItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getExitEditorItem() {
+		if (exitEditorItem == null) {
+			exitEditorItem = new JMenuItem();
+			exitEditorItem.setText("Exit");
+			exitEditorItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, Event.CTRL_MASK, false));
+			exitEditorItem.addActionListener(this);
+		}
+		return exitEditorItem;
+	}
+
 	public static void main(String[] args)
 	{
 		QTIEditor f = new QTIEditor();
 		try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            UIManager.setLookAndFeel(LAF);
             SwingUtilities.updateComponentTreeUI(f);
           } catch (Exception exception) {
             JOptionPane.showMessageDialog(null,
@@ -617,6 +776,5 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
           }
 		f.setVisible(true);
 		f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	}
-	
+	}	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
