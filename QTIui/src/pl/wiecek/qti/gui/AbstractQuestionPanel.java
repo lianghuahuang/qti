@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public abstract class AbstractQuestionPanel extends JPanel implements ActionListener{
+public abstract class AbstractQuestionPanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	private JTextArea jTextArea = null;
@@ -75,6 +75,7 @@ public abstract class AbstractQuestionPanel extends JPanel implements ActionList
 		this.setLayout(new BorderLayout());
 		this.setSize(705, 500);
 		this.add(NPanel, BorderLayout.NORTH);
+		this.setBackground(new Color(221, 236, 251));
 	}
 
 	/**
