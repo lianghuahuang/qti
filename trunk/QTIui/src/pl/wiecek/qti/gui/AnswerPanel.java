@@ -215,7 +215,7 @@ public class AnswerPanel extends JPanel implements ActionListener{
 				   }
 		     }
 			else
-				JOptionPane.showMessageDialog(this, "        Delete is unavailable", "", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Delete is unavailable", "WARNING", JOptionPane.INFORMATION_MESSAGE);
 	   }
 	}
 	

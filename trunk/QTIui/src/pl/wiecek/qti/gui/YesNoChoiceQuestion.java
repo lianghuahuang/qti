@@ -1,6 +1,5 @@
 package pl.wiecek.qti.gui;
 
-import java.util.ArrayList;
 
 public class YesNoChoiceQuestion extends SimpleChoiceQuestion {
 

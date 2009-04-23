@@ -152,9 +152,16 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 	
 @Override
 public void actionPerformed(ActionEvent e) {
+	if(getQuestionType().equals("Yes No Question"))
+	{
+		JOptionPane.showMessageDialog(null, "You can't add more  questions than 2", "WARNING", JOptionPane.INFORMATION_MESSAGE);
+	}
+	else
+	{
 		if(answerCount < MAX_QUESTIONS)
 			addAnswers(1);
 		else
 			JOptionPane.showMessageDialog(null, "Sorry ... You can add only 10 answers", "WARNING", JOptionPane.INFORMATION_MESSAGE);
+	}
  }	
 }  //  @jve:decl-index=0:visual-constraint="64,82"
