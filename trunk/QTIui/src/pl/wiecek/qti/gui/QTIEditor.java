@@ -138,21 +138,6 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		this.setContentPane(getJContentPane());
 		this.setTitle("QTI Editor");
 		this.createPopupMenu();
-		// JFileChooser initialization
-		fc = new JFileChooser();
-		fc.setMultiSelectionEnabled(true);
-		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		fc.setDragEnabled(true);
-		try {
-            UIManager.setLookAndFeel(LAF);
-            SwingUtilities.updateComponentTreeUI(fc);
-          } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null,
-                "Can't change look and feel",
-                "Invalid PLAF",
-                JOptionPane.ERROR_MESSAGE);
-          }
-          fc.addChoosableFileFilter(new XMLFileFilter());
 	}
 
 	/**
@@ -497,6 +482,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		}
 		else if(source == openItem)
 		{
+			createJFileChooser();
 			openFiles();
 		}
 		else if(source == saveItem)
@@ -760,6 +746,28 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 			exitEditorItem.addActionListener(this);
 		}
 		return exitEditorItem;
+	}
+	
+	private void createJFileChooser()
+	{
+		if(fc == null)
+		{
+			// JFileChooser initialization
+			fc = new JFileChooser();
+			fc.setMultiSelectionEnabled(true);
+			fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			fc.setDragEnabled(true);
+			try {
+	            UIManager.setLookAndFeel(LAF);
+	            SwingUtilities.updateComponentTreeUI(fc);
+	          } catch (Exception exception) {
+	            JOptionPane.showMessageDialog(null,
+	                "Can't change look and feel",
+	                "Invalid PLAF",
+	                JOptionPane.ERROR_MESSAGE);
+	          }
+	          fc.addChoosableFileFilter(new XMLFileFilter());
+		}
 	}
 
 	public static void main(String[] args)

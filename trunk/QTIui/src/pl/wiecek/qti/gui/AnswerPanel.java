@@ -69,8 +69,9 @@ public class AnswerPanel extends JPanel implements ActionListener{
 		nrLabel.setText("1");
 		this.setLayout(flowLayout);
 		this.setBackground(new Color(221, 236, 251));
-		this.setMaximumSize(new Dimension(1680,45));
-		this.setMinimumSize(new Dimension(800,45));
+		this.setMaximumSize(new Dimension(1680,50));
+		this.setMinimumSize(new Dimension(800,50));
+		this.setPreferredSize(new Dimension(700,50));
 		this.setLocation(x, y);
 		this.add(nrLabel, null);
 		this.add(getChoiceTextArea(), null);
@@ -92,6 +93,7 @@ public class AnswerPanel extends JPanel implements ActionListener{
 			ChoiceTextArea.setLineWrap(true);
 			ChoiceTextArea.setFont(new Font("Arial", Font.PLAIN, 11));
 			ChoiceTextArea.setWrapStyleWord(true);
+			this.setMinimumSize(new Dimension(100,40));
 		}
 		return ChoiceTextArea;
 	}
@@ -105,8 +107,8 @@ public class AnswerPanel extends JPanel implements ActionListener{
 		if (AnswerScrollBar == null) {
 			AnswerScrollBar = new JScrollPane(getChoiceTextArea());
 			AnswerScrollBar.setPreferredSize(new Dimension(400, 35));
-			AnswerScrollBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-			AnswerScrollBar.setEnabled(false);
+			AnswerScrollBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+			//AnswerScrollBar.setEnabled(false);
 			AnswerScrollBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			AnswerScrollBar.setBackground(Color.white);
 			AnswerScrollBar.setForeground(Color.white);

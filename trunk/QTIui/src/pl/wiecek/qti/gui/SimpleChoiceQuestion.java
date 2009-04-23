@@ -27,14 +27,14 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane jScrollPane;  //  @jve:decl-index=0:visual-constraint="96,118"
-	private JPanel description,info, jPanel;
+	private JPanel description,info, jPanel, mainPanel;
 	private JCheckBox shuffleBox;
 	private JButton addChoice;
 	private JLabel nrLabel, shuffleLabel, correct, score, choiceText;
 	private ArrayList<AnswerPanel> choiceList= new ArrayList<AnswerPanel>();  //  @jve:decl-index=0:
 	private int answerCount;
-	private int position = 80;
-	private final int height = 45;
+	private int position = 10;
+	private final int height = 48;
 	private static final int MAX_QUESTIONS = 10;
 	
 	
@@ -49,12 +49,11 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 
 	/**
 	 * This method initializes this
+	 * Add mainPanel to the MainFrame in center position 
 	 * 
 	 */
 	private void initialize() {
-       // this.setSize(new Dimension(859, 378));
-        super.add(getJScrollPane(), BorderLayout.CENTER);
-			
+        super.add(getMainPanel(), BorderLayout.CENTER);
 	}
 
 	/**
@@ -69,6 +68,9 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 			jScrollPane.setViewportView(getJPanel());
 			//jScrollPane.scrollRectToVisible(new Rectangle(0, jScrollPane.getHeight()-2, 10, 10));
 			//jPanel.setPreferredSize(jScrollPane.getViewport().getExtentSize()); 
+			jScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+			jScrollPane.setLocation(0, 80);
+			//jScrollPane.getVerticalScrollBar().setBlockIncrement(30);
 		}
 		return jScrollPane;
 	}
@@ -83,11 +85,29 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 			jPanel = new JPanel();
 			jPanel.setBackground(new Color(221, 236, 251));
 			jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
-			jPanel.add(getDescJPanel());
-			jPanel.add(getInfoJPanel());
+			//jPanel.add(getDescJPanel());
+			//jPanel.add(getInfoJPanel());
 			//jPanel.scrollRectToVisible(new Rectangle(0, jPanel.getHeight()-2, 10, 10));
 		}
 		return jPanel;
+	}
+	
+	/**
+	 * This method initializes jPanel	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JPanel getMainPanel() {
+		if (mainPanel == null) {
+			mainPanel = new JPanel();
+			mainPanel.setBackground(new Color(221, 236, 251));
+			mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+			mainPanel.add(getDescJPanel());
+			mainPanel.add(getInfoJPanel());
+			//mainPanel.getGraphics().drawLine(0, 60, 800, 60);
+			mainPanel.add(getJScrollPane());
+		}
+		return mainPanel;
 	}
 
 	@Override
