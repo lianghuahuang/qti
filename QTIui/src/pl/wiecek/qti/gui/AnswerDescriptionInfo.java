@@ -25,7 +25,7 @@ public class AnswerDescriptionInfo extends JPanel{
 		flowLayout.setHgap(15);
 		flowLayout.setAlignment(java.awt.FlowLayout.CENTER);
 		flowLayout.setVgap(5);
-		choiceText = new JLabel("Choice text");
+		choiceText = new JLabel("Answer text");
 		
 		choiceText.setPreferredSize(new Dimension(395, 20));
 		choiceText.setHorizontalAlignment(SwingConstants.LEFT);

@@ -1,6 +1,5 @@
 package pl.wiecek.qti.gui;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class OpenQuestion extends AbstractQuestionPanel{

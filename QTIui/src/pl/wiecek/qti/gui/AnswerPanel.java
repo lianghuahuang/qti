@@ -42,6 +42,11 @@ public class AnswerPanel extends JPanel implements ActionListener{
 		super();
 		initialize(0, 0);
 	}
+	
+	public AnswerPanel(int x, int y) {
+		super();
+		initialize(x, y);
+	}
 	/**
 	 * This is the set position constructor
 	 */
@@ -238,6 +243,10 @@ public class AnswerPanel extends JPanel implements ActionListener{
 	
 	public String getText() {
 		return ChoiceTextArea.getText();
+	}
+	
+	public JTextArea getJTextArea() {
+		return ChoiceTextArea;
 	}
 	
 	public void setRadioButton(Boolean selected) {

@@ -13,6 +13,7 @@ public class ComboBoxValues {
 			add("Multiple Question");
 			add("Yes No Question");
 			add("Open Question");
+			add("Fill in blank Question");
 		}
 	};
 	public static final String[] ANSWERS_NUMBER = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }; 
@@ -25,6 +26,7 @@ public class ComboBoxValues {
 	                 put("Multiple Question", "pl.wiecek.qti.gui.MultipleChoiceQuestion");  
 	                 put("Yes No Question", "pl.wiecek.qti.gui.YesNoChoiceQuestion");  
 	                 put("Open Question", "pl.wiecek.qti.gui.OpenQuestion");  
+	                 put("Fill in blank Question", "pl.wiecek.qti.gui.BlankQuestion"); 
 	             }  
 	         };
 	public static String getQuestionAlias(String question)
