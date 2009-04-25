@@ -472,6 +472,12 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 				numberComboBox.setEnabled(false);
 				answersNumber = 2;
 			}
+			else if(questionType.equals("Open Question") || questionType.equals("Fill in blank Question"))
+			{
+				numberComboBox.setSelectedIndex(0);
+				numberComboBox.setEnabled(false);
+				answersNumber = 1;
+			}
 		}
 		else if(source == addButton)
 		{
@@ -783,6 +789,6 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
                 JOptionPane.ERROR_MESSAGE);
           }
 		f.setVisible(true);
-		f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		f.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
