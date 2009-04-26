@@ -180,11 +180,12 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	public abstract int getQuestionNumber();
 
 	public void setTitle(String title) {
-		
+		DefaultListModel model = (DefaultListModel)editor.getQuestionsList().getModel();
+		model.addElement(title);
 	}
 
 	public void setText(String text) {
-		
+		jTextArea.setText(text);
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
