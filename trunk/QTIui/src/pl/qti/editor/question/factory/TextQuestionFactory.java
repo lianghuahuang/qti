@@ -15,6 +15,7 @@ public class TextQuestionFactory extends AbstractQuestionFactory {
 			QTIEditor editor) {
 		this.question = new TextQuestion();
 		this.questionPanel = new OpenQuestion(editor);
+		this.questionXml = questionXml; 
 		super.makeHeader();
 		this.questionPanel.setText(this.question.getText());
 		return this.questionPanel;
