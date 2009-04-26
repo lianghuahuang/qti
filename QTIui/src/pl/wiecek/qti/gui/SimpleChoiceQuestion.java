@@ -164,5 +164,9 @@ public void actionPerformed(ActionEvent e) {
 		else
 			JOptionPane.showMessageDialog(null, "Sorry ... You can add only 10 answers", "WARNING", JOptionPane.INFORMATION_MESSAGE);
 	}
- }	
+ }
+	@Override
+	public void addAnswers(ArrayList<AnswerPanel> answers) {
+		this.choiceList = answers;
+	}	
 }  //  @jve:decl-index=0:visual-constraint="64,82"
