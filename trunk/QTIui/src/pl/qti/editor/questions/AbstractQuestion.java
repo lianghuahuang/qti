@@ -3,6 +3,8 @@ package pl.qti.editor.questions;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import pl.qti.editor.exceptions.InvalidXmlException;
+
 public abstract class AbstractQuestion {
 
 	protected Node assessmentItem = null;
@@ -36,6 +38,6 @@ public abstract class AbstractQuestion {
 		return assessmentItem.getAttributes().getNamedItem("title").getNodeValue();
 	}
 
-	public abstract String getText();
+	public abstract String getText() throws InvalidXmlException;
 
 }
