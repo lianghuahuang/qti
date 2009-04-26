@@ -134,7 +134,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		this.setSize(970, 700);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icons/icon.png")));
 		this.setPreferredSize(new Dimension(671, 457));
-		this.setMinimumSize(new Dimension(980, 800));
+		this.setMinimumSize(new Dimension(980, 900));
 		this.setResizable(true);
 		this.setJMenuBar(getJJMenuBar());
 		this.setContentPane(getJContentPane());

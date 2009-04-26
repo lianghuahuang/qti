@@ -17,6 +17,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.FlowLayout;
@@ -37,6 +38,7 @@ public class CorrectOrderList extends JPanel implements ActionListener, MouseLis
 	private JButton UpButton = null;
 	private JButton DownButton = null;
 	private JLabel InfoLabel = null;
+	private JScrollPane scrollPane;
 
 	/**
 	 * This is the default constructor
@@ -55,7 +57,7 @@ public class CorrectOrderList extends JPanel implements ActionListener, MouseLis
 		InfoLabel = new JLabel();
 		InfoLabel.setText("Choose correct order");
 		InfoLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		InfoLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		InfoLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		InfoLabel.setPreferredSize(new Dimension(129, 35));
 		InfoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel1 = new JLabel();
@@ -64,14 +66,16 @@ public class CorrectOrderList extends JPanel implements ActionListener, MouseLis
 		jLabel.setText("            ");
 		this.setSize(551, 290);
 		this.setLayout(new BorderLayout());
-		this.add(getJList(), BorderLayout.CENTER);
+		this.add(getJScrollPane(), BorderLayout.CENTER);
 		this.add(jLabel, BorderLayout.EAST);
 		this.add(jLabel1, BorderLayout.WEST);
-		//model = (DefaultListModel)jList.getModel();
 		this.add(getSouthPanel(), BorderLayout.SOUTH);
 		this.add(InfoLabel, BorderLayout.NORTH);
 		this.setBackground(new Color(221, 236, 251));
-		this.setBorder(BorderFactory.createTitledBorder(null, "ORDER", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), new Color(0, 70, 213)));
+		//this.setBorder(BorderFactory.createTitledBorder(null, "CORRECT ORDERING", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), Color.black));
+		this.setMaximumSize(new Dimension(1680,250));
+		this.setMinimumSize(new Dimension(800,250));
+		this.setPreferredSize(new Dimension(700,250));
 	}
 
 	/**
@@ -83,17 +87,26 @@ public class CorrectOrderList extends JPanel implements ActionListener, MouseLis
 		if (jList == null) {
 			jList = new JList(model);
 			//DefaultListModel  model2 = (DefaultListModel) jList.getModel();
-			model.addElement("SUCHY");
-			model.addElement("PIES");
-			model.addElement("BUNDA");
+			model.addElement("Test 1");
+			model.addElement("Test 2");
+			model.addElement("Test 3");
 			
 			jList.setFont(new Font("Dialog", Font.BOLD, 12));
-			jList.setForeground(Color.red);
-			jList.setBackground(SystemColor.info);
+			jList.setForeground(SystemColor.activeCaption);
+			jList.setBackground(SystemColor.control);
 			jList.setAutoscrolls(true);
 			jList.addMouseListener(this);
 		}
 		return jList;
+	}
+	
+	private JScrollPane getJScrollPane() {
+		 scrollPane = new JScrollPane(getJList());
+		 scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		 scrollPane.setPreferredSize(new Dimension(500, 200));
+		 scrollPane.setMinimumSize(new Dimension(500, 198));
+		 scrollPane.setMaximumSize(new Dimension(500, 203));
+		 return scrollPane;
 	}
 
 	@Override

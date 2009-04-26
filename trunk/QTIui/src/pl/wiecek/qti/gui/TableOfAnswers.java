@@ -21,6 +21,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.Font;
+import javax.swing.BorderFactory;
+import javax.swing.border.TitledBorder;
 
 
 
@@ -53,13 +55,14 @@ public class TableOfAnswers extends JPanel implements TableModelListener, Action
 	 * @return void
 	 */
 	private void initialize() {
-		jLabel2 = new JLabel();
-		jLabel2.setText("JLabel");
+		jLabel2 = new JLabel(); 
+		jLabel2.setText("             ");
 		jLabel1 = new JLabel();
-		jLabel1.setText("JLabel");
+		jLabel1.setText("             ");
 		jLabel = new JLabel();
-		jLabel.setText("ANSWERS");
+		jLabel.setText("Define all the answers in the following table");
 		jLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		jLabel.setPreferredSize(new Dimension(208, 34));
 		jLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		this.setSize(531, 251);
 		this.setLayout(new BorderLayout());
@@ -68,6 +71,11 @@ public class TableOfAnswers extends JPanel implements TableModelListener, Action
 		this.add(jLabel1, BorderLayout.EAST);
 		this.add(jLabel2, BorderLayout.WEST);
 		this.add(getSouthPanel(), BorderLayout.SOUTH);
+		this.setPreferredSize(new Dimension(500, 250));
+		//this.setBorder(BorderFactory.createTitledBorder(null, "ANSWERS", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), Color.black));
+		this.setMinimumSize(new Dimension(500, 250));
+		this.setMaximumSize(new Dimension(500, 250));
+		this.setBackground(new Color(221, 236, 251));
 	}
 
 	/**
@@ -92,18 +100,20 @@ public class TableOfAnswers extends JPanel implements TableModelListener, Action
 		if (jTable == null) {
 			model = new MyTableModel();
 			jTable = new JTable(model);
-			jTable.setRowHeight(30);
-			jTable.setBackground(new Color(204, 255, 204));
+			jTable.setRowHeight(20);
+			jTable.setBackground(Color.white);
 			jTable.setForeground(Color.black);
-			jTable.setGridColor(new Color(255, 0, 51));
-			jTable.setFont(new Font("Dialog", Font.PLAIN, 14));
+			jTable.setGridColor(Color.black);
+			jTable.setFont(new Font("Dialog", Font.PLAIN, 12));
 			jTable.getModel().addTableModelListener(this);
 		    column = jTable.getColumnModel().getColumn(0);
 		    column.setPreferredWidth(5);
+		    column.setResizable(false);
 		    column = jTable.getColumnModel().getColumn(1);
 		    column.setPreferredWidth(400);
 		    column = jTable.getColumnModel().getColumn(2);
 		    column.setPreferredWidth(26);
+		    column.setResizable(false);
 		}
 		return jTable;
 	}
@@ -132,7 +142,7 @@ public class TableOfAnswers extends JPanel implements TableModelListener, Action
 	private JButton getDelButton() {
 			if (addButton == null) {
 				addButton = new JButton();
-				addButton.setText("   ADD ");
+				addButton.setText("   Add Element  ");
 				addButton.addActionListener(this);
 			}
 			return addButton;
@@ -141,7 +151,7 @@ public class TableOfAnswers extends JPanel implements TableModelListener, Action
 	private JButton getAddButton() {
 		if (delButton == null) {
 			delButton = new JButton();
-			delButton.setText("   DEL ");
+			delButton.setText("Delete Element");
 			delButton.addActionListener(this);
 		}
 		return delButton;
