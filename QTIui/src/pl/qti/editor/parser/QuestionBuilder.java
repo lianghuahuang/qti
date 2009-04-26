@@ -8,6 +8,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import pl.qti.editor.exceptions.InvalidXmlException;
 import pl.qti.editor.question.factory.AbstractQuestionFactory;
 import pl.qti.editor.question.factory.MultipleChoiceFactory;
 import pl.qti.editor.question.factory.MultiplePairFactory;
@@ -26,7 +27,8 @@ public class QuestionBuilder {
 	private final static String recAttrType = "baseType";
 	private static HashMap<String, Integer> values = null;
 	
-	public static AbstractQuestionPanel buildQuestion(File questionFile, QTIEditor editor) throws InstantiationException, IllegalAccessException, ClassNotFoundException, ParseException
+	public static AbstractQuestionPanel buildQuestion(File questionFile, QTIEditor editor) 
+		throws InstantiationException, IllegalAccessException, ClassNotFoundException, ParseException, InvalidXmlException
 		{
 			ParserWrapper parser = (ParserWrapper)Class.forName("pl.qti.editor.parser.Xerces").newInstance();	
 			Document document = null;
