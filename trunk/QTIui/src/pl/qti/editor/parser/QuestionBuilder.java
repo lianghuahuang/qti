@@ -9,7 +9,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import pl.qti.editor.question.factory.AbstractQuestionFactory;
+import pl.qti.editor.question.factory.MultipleChoiceFactory;
+import pl.qti.editor.question.factory.MultiplePairFactory;
+import pl.qti.editor.question.factory.OrderedChoiceFactory;
 import pl.qti.editor.question.factory.SingleChoiceFactory;
+import pl.qti.editor.question.factory.TextQuestionFactory;
 import pl.wiecek.qti.gui.AbstractQuestionPanel;
 
 
@@ -44,15 +48,19 @@ public class QuestionBuilder {
 	        		// create Single choice question factory http://www.imsglobal.org/question/qti_v2p0/examples/items/choice.xml
 	        		break;
 	        	case 1:
+	        		questionFactory = new MultipleChoiceFactory();
 		        	// create Multiple choice question factory http://www.imsglobal.org/question/qti_v2p0/examples/items/choice_multiple.xml
 		        	break;
 	        	case 2:
+	        		questionFactory = new OrderedChoiceFactory();
 	        		// create Ordered choice question factory http://www.imsglobal.org/question/qti_v2p0/examples/items/order.xml
 	        		break;
 	        	case 3:
+	        		questionFactory = new MultiplePairFactory();
 	        		// create Multiple Pair question factory http://www.imsglobal.org/question/qti_v2p0/examples/items/associate.xml
 	        		break;
 	        	case 4:
+	        		questionFactory = new TextQuestionFactory();
 	        		// create Text question factory http://www.imsglobal.org/question/qti_v2p0/examples/items/extended_text.xml
 	        		break;
 	        	default:
