@@ -10,7 +10,7 @@ public class SingleChoiceFactory extends AbstractQuestionFactory {
 	@Override
 	public AbstractQuestionPanel makeQuestion(Document questionXml,
 			QTIEditor editor) {
-		return null;
+		return this.questionPanel;		
 	}
 
 }
