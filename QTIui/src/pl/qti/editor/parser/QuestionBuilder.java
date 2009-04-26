@@ -15,6 +15,7 @@ import pl.qti.editor.question.factory.OrderedChoiceFactory;
 import pl.qti.editor.question.factory.SingleChoiceFactory;
 import pl.qti.editor.question.factory.TextQuestionFactory;
 import pl.wiecek.qti.gui.AbstractQuestionPanel;
+import pl.wiecek.qti.gui.QTIEditor;
 
 
 
@@ -25,7 +26,7 @@ public class QuestionBuilder {
 	private final static String recAttrType = "baseType";
 	private static HashMap<String, Integer> values = null;
 	
-	public static AbstractQuestionPanel buildQuestion(File questionFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, ParseException
+	public static AbstractQuestionPanel buildQuestion(File questionFile, QTIEditor editor) throws InstantiationException, IllegalAccessException, ClassNotFoundException, ParseException
 		{
 			ParserWrapper parser = (ParserWrapper)Class.forName("pl.qti.editor.parser.Xerces").newInstance();	
 			Document document = null;
@@ -67,7 +68,7 @@ public class QuestionBuilder {
 	        		throw new ParseException("Provided file does not contain proper QTI question!", 0);
 	        		
 	        }
-			return questionFactory.makeQuestion(document);
+			return questionFactory.makeQuestion(document, editor);
 
 		}
 	
