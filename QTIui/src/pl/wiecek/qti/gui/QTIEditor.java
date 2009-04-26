@@ -50,12 +50,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
+import pl.qti.editor.parser.QuestionBuilder;
 import pl.wiecek.qti.utils.ComboBoxValues;
 import pl.wiecek.qti.utils.ClassLoader;
 import pl.wiecek.qti.utils.XMLDirectoryFilter;
 import pl.wiecek.qti.utils.XMLFileFilter;
 
 import java.awt.Toolkit;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.awt.ComponentOrientation;
 import java.io.File;
@@ -516,21 +518,41 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
         if (returnVal == JFileChooser.APPROVE_OPTION) 
         {
         	
-            File[] file = fc.getSelectedFiles();
-            System.out.println(file.length);
-            for(File f : file)
-            {
-            	if(f.isDirectory())
-            	{
-            		for(File f2 : f.listFiles(new XMLDirectoryFilter()))
-                    {
-            			System.out.println("FILE " + f2.getAbsolutePath());
-                    }
-            	}
-            	else
-            		 System.out.println("FILE" + f.getAbsolutePath());
-            		
-            }
+//            File[] file = fc.getSelectedFiles();
+//            System.out.println(file.length);
+//            for(File f : file)
+//            {
+//            	if(f.isDirectory())
+//            	{
+//            		for(File f2 : f.listFiles(new XMLDirectoryFilter()))
+//                    {
+//            			System.out.println("FILE " + f2.getAbsolutePath());
+//                    }
+//            	}
+//            	else
+//            		 System.out.println("FILE" + f.getAbsolutePath());
+//            		
+//            }
+        	File f = fc.getSelectedFile();
+        	try {
+			AbstractQuestionPanel panel =	QuestionBuilder.buildQuestion(f, this);
+			
+			questionList.add(panel);
+			jTabbedPane.removeAll();
+			jTabbedPane.addTab(panel.getQuestionType(), panel);
+			currentSelected = questionList.size() - 1;
+			selected = true;
+			questionsList.setSelectedIndex(questionList.size() - 1);
+			
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
         } else {
         }
 
