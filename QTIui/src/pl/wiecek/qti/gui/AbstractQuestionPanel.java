@@ -39,6 +39,7 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	private JTextField newNameTextField = null;
 	private JButton newNameButton = null;
 	private QTIEditor editor = null;
+	private DefaultListModel model;
 
 	/**
 	 * This is the default constructor
@@ -144,7 +145,7 @@ public abstract class AbstractQuestionPanel extends JPanel{
 			{
 				public void actionPerformed(ActionEvent e) 
 				{
-					DefaultListModel model = (DefaultListModel)editor.getQuestionsList().getModel();
+				    model = (DefaultListModel)editor.getQuestionsList().getModel();
 					model.setElementAt(newNameTextField.getText(), editor.getCurrentSelected());
 				 }	
 			});
@@ -180,7 +181,7 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	public abstract int getQuestionNumber();
 
 	public void setTitle(String title) {
-		DefaultListModel model = (DefaultListModel)editor.getQuestionsList().getModel();
+	    model = (DefaultListModel)editor.getQuestionsList().getModel();
 		model.addElement(title);
 	}
 
