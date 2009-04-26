@@ -476,4 +476,7 @@ public class BlankQuestion extends AbstractQuestionPanel implements ActionListen
 			this.description = description;
 		}
 	}
+	
+	@Override
+	public void addAnswers(ArrayList<AnswerPanel> answers) {}	
 }

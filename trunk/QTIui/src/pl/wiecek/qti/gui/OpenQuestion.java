@@ -42,4 +42,7 @@ public class OpenQuestion extends AbstractQuestionPanel{
 	public void saveToXML() {
 		// TODO Auto-generated method stub
 	}
+	
+	@Override
+	public void addAnswers(ArrayList<AnswerPanel> answers) {}	
 }

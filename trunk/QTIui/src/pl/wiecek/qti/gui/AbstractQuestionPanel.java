@@ -179,6 +179,7 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	public abstract void removeAnswerAt(int index);
 	public abstract void addAnswers(int count);
 	public abstract int getQuestionNumber();
+	public abstract void addAnswers(ArrayList<AnswerPanel> answers);
 
 	public void setTitle(String title) {
 	    model = (DefaultListModel)editor.getQuestionsList().getModel();
