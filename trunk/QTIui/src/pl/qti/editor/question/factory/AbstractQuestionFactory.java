@@ -4,6 +4,7 @@ import org.w3c.dom.Document;
 
 import pl.qti.editor.questions.AbstractQuestion;
 import pl.wiecek.qti.gui.AbstractQuestionPanel;
+import pl.wiecek.qti.gui.QTIEditor;
 
 public abstract class AbstractQuestionFactory {
 	
@@ -20,5 +21,5 @@ public abstract class AbstractQuestionFactory {
 		question.setResponseProcessing(questionXml.getElementsByTagName("responseProcessing"));
 		questionPanel.setTitle(question.getTitle());
 	}
-	public abstract AbstractQuestionPanel makeQuestion(Document questionXml);
+	public abstract AbstractQuestionPanel makeQuestion(Document questionXml, QTIEditor editor);
 }
