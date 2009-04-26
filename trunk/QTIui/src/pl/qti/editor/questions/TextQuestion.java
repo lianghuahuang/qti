@@ -26,7 +26,6 @@ public class TextQuestion extends AbstractQuestion {
 				break;
 			}			
 		}
-		System.out.println(prompt.getNodeName()+" brutus "+prompt.getTextContent()+"aa"+prompt.getNodeValue());
 		return prompt.getTextContent();
 	}
 }
