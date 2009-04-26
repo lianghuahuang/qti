@@ -10,6 +10,10 @@ public class OpenQuestion extends AbstractQuestionPanel{
 		super(editor);
 	}
 
+	public OpenQuestion() {
+		super();
+	}
+
 	@Override
 	public void addAnswers(int count) {
 	}

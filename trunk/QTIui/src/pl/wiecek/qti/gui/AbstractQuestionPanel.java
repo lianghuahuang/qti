@@ -48,6 +48,12 @@ public abstract class AbstractQuestionPanel extends JPanel{
 		this.editor = editor;
 		initialize();
 	}
+	
+	public AbstractQuestionPanel()
+	{
+		super();
+		initialize();
+	}
 
 	/**
 	 * This method initializes this
@@ -172,5 +178,13 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	public abstract void removeAnswerAt(int index);
 	public abstract void addAnswers(int count);
 	public abstract int getQuestionNumber();
+
+	public void setTitle(String title) {
+		
+	}
+
+	public void setText(String text) {
+		
+	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
