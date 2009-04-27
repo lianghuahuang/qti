@@ -7,6 +7,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
 
 import pl.qti.editor.exceptions.InvalidXmlException;
 import pl.qti.editor.question.factory.AbstractQuestionFactory;
@@ -32,6 +34,13 @@ public class QuestionBuilder {
 		{
 			ParserWrapper parser = (ParserWrapper)Class.forName("pl.qti.editor.parser.Xerces").newInstance();	
 			Document document = null;
+			try {
+				parser.setFeature("http://xml.org/sax/features/namespaces", false);
+			} catch (SAXNotRecognizedException e) {
+				throw new InvalidXmlException(e.getMessage());
+			} catch (SAXNotSupportedException e) {
+				throw new InvalidXmlException(e.getMessage());
+			}
 	        try {
 				document = parser.parse(questionFile.getAbsolutePath());
 			} catch (Exception e) {
