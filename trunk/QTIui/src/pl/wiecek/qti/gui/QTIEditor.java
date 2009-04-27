@@ -475,7 +475,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 				numberComboBox.setEnabled(false);
 				answersNumber = 2;
 			}
-			else if(questionType.equals("Open Question") || questionType.equals("Fill in blank Question"))
+			else if(questionType.equals("Open Question") || questionType.equals("Fill in blank Question") || questionType.equals("Correcr Order Question"))
 			{
 				numberComboBox.setSelectedIndex(0);
 				numberComboBox.setEnabled(false);
