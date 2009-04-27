@@ -8,11 +8,11 @@ import org.w3c.dom.NodeList;
 
 import pl.qti.editor.exceptions.InvalidXmlException;
 import pl.qti.editor.questions.SingleChoiceQuestion;
-import pl.wiecek.qti.gui.AbstractQuestionPanel;
-import pl.wiecek.qti.gui.AnswerPanel;
-import pl.wiecek.qti.gui.QTIEditor;
-import pl.wiecek.qti.gui.SimpleChoiceQuestion;
-import pl.wiecek.qti.gui.YesNoChoiceQuestion;
+import pl.qti.gui.AbstractQuestionPanel;
+import pl.qti.gui.AnswerPanel;
+import pl.qti.gui.QTIEditor;
+import pl.qti.gui.SimpleChoiceQuestion;
+import pl.qti.gui.YesNoChoiceQuestion;
 
 public class SingleChoiceFactory extends AbstractQuestionFactory {
 

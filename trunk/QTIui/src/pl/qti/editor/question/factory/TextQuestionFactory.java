@@ -4,9 +4,9 @@ import org.w3c.dom.Document;
 
 import pl.qti.editor.exceptions.InvalidXmlException;
 import pl.qti.editor.questions.TextQuestion;
-import pl.wiecek.qti.gui.AbstractQuestionPanel;
-import pl.wiecek.qti.gui.OpenQuestion;
-import pl.wiecek.qti.gui.QTIEditor;
+import pl.qti.gui.AbstractQuestionPanel;
+import pl.qti.gui.OpenQuestion;
+import pl.qti.gui.QTIEditor;
 
 public class TextQuestionFactory extends AbstractQuestionFactory {
 

@@ -4,8 +4,8 @@ import org.w3c.dom.Document;
 
 import pl.qti.editor.exceptions.InvalidXmlException;
 import pl.qti.editor.questions.AbstractQuestion;
-import pl.wiecek.qti.gui.AbstractQuestionPanel;
-import pl.wiecek.qti.gui.QTIEditor;
+import pl.qti.gui.AbstractQuestionPanel;
+import pl.qti.gui.QTIEditor;
 
 public abstract class AbstractQuestionFactory {
 	

@@ -9,9 +9,9 @@ import org.w3c.dom.NodeList;
 import pl.qti.editor.exceptions.InvalidXmlException;
 import pl.qti.editor.questions.OrderQuestionData;
 import pl.qti.editor.questions.SimpleAnswer;
-import pl.wiecek.qti.gui.AbstractQuestionPanel;
-import pl.wiecek.qti.gui.OrderQuestion;
-import pl.wiecek.qti.gui.QTIEditor;
+import pl.qti.gui.AbstractQuestionPanel;
+import pl.qti.gui.OrderQuestion;
+import pl.qti.gui.QTIEditor;
 
 public class OrderedChoiceFactory extends AbstractQuestionFactory {
 
@@ -33,7 +33,7 @@ public class OrderedChoiceFactory extends AbstractQuestionFactory {
 		{
 			SimpleAnswer sp = new SimpleAnswer(simpleChoices.item(i).getTextContent().trim());
 			Node fixed = simpleChoices.item(i).getAttributes().getNamedItem("fixed");
-			if(fixed!=null & fixed.getNodeValue().equalsIgnoreCase("true"))
+			if(fixed!=null && fixed.getNodeValue().equalsIgnoreCase("true"))
 				sp.setFixed(true);
 			answers.add(sp);
 			for(int k=0;k<values.getLength();k++)

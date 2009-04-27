@@ -9,10 +9,10 @@ import org.w3c.dom.NodeList;
 
 import pl.qti.editor.exceptions.InvalidXmlException;
 import pl.qti.editor.questions.MultipleChoiceQuestionData;
-import pl.wiecek.qti.gui.AbstractQuestionPanel;
-import pl.wiecek.qti.gui.AnswerPanel;
-import pl.wiecek.qti.gui.MultipleChoiceQuestion;
-import pl.wiecek.qti.gui.QTIEditor;
+import pl.qti.gui.AbstractQuestionPanel;
+import pl.qti.gui.AnswerPanel;
+import pl.qti.gui.MultipleChoiceQuestion;
+import pl.qti.gui.QTIEditor;
 
 public class MultipleChoiceFactory extends AbstractQuestionFactory {
 
