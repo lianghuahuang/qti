@@ -468,7 +468,19 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 	
 	public void setAnswers(ArrayList<SimpleAnswer> list, ArrayList<Integer> orderInserted)
 	{
+		int row = 0;
+		for(SimpleAnswer answer : list)
+		{
+			tableModel.setValueAt(row + 1, row, 0);
+			tableModel.setValueAt(answer.getValue(), row, 1);
+			tableModel.setValueAt(answer.isFixed(), row, 2);
+			row++;
+		}
 		
+		for(Integer order : orderInserted)
+		{
+			listModel.addElement(list.get(order).getValue());
+		}
 	}
 	
 	//------------------------------------------------------
