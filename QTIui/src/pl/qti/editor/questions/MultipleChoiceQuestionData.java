@@ -31,7 +31,7 @@ public class MultipleChoiceQuestionData extends AbstractQuestion {
 		{
 			throw new InvalidXmlException("Invalid XML file!");
 		}
-		return prompt.getTextContent();
+		return prompt.getTextContent().trim();
 	}
 
 }
