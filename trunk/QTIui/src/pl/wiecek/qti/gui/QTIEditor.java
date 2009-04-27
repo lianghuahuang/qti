@@ -492,7 +492,12 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		else if(source == openItem)
 		{
 			createJFileChooser();
-			openFiles();
+			try {
+				openFiles();
+			} catch (InvalidXmlException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		else if(source == saveItem)
 		{
@@ -512,7 +517,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		}
 	}
 
-	private void openFiles() {
+	private void openFiles() throws InvalidXmlException {
 
 		int returnVal = fc.showOpenDialog(QTIEditor.this);
 
