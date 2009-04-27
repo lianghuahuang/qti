@@ -33,10 +33,6 @@ public class SingleChoiceFactory extends AbstractQuestionFactory {
 		}
 		super.makeHeader();
 		SimpleChoiceQuestion panel = (SimpleChoiceQuestion)this.questionPanel;
-		if(this.questionPanel instanceof YesNoChoiceQuestion)
-		{
-			panel = (YesNoChoiceQuestion)this.questionPanel;
-		}
 
 		NodeList list = questionXml.getElementsByTagName("correctResponse").item(0).getChildNodes();
 		String value = null;
