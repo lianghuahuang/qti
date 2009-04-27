@@ -456,12 +456,12 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 
 		if(e.getType() == TableModelEvent.UPDATE)
 		{
-			System.out.println("UPDATE");
+			//System.out.println("UPDATE");
 		}
 		
 		if(e.getType() == TableModelEvent.DELETE)
 		{
-			System.out.println("DELETE");
+			//System.out.println("DELETE");
 		}
 		
 	}
@@ -471,16 +471,16 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 		int row = 0;
 		for(SimpleAnswer answer : list)
 		{
-			tableModel.setValueAt(row + 1, row, 0);
-			tableModel.setValueAt(answer.getValue(), row, 1);
-			tableModel.setValueAt(answer.isFixed(), row, 2);
+			tableModel.insertRow(row, new Object[]  {row + 1,answer.getValue(), answer.isFixed() });
 			row++;
 		}
 		
 		for(Integer order : orderInserted)
 		{
 			listModel.addElement(list.get(order).getValue());
+			System.out.println(order);
 		}
+		count = row;
 	}
 	
 	//------------------------------------------------------
