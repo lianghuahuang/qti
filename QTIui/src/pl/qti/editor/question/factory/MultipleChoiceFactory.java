@@ -25,7 +25,7 @@ public class MultipleChoiceFactory extends AbstractQuestionFactory {
 		super.makeHeader();
 		MultipleChoiceQuestion panel = (MultipleChoiceQuestion)this.questionPanel;
 		NodeList values = questionXml.getElementsByTagName("value");
-		NodeList simpleChoices = questionXml.getElementsByTagName("value");
+		NodeList simpleChoices = questionXml.getElementsByTagName("simpleChoice");
 		NodeList mappingEntry = questionXml.getElementsByTagName("mapEntry");
 		//TODO upperBound i lowerBound jak TIT dorobi!
 		//TODO feedback
@@ -41,7 +41,9 @@ public class MultipleChoiceFactory extends AbstractQuestionFactory {
 		for(int i=0;i<mappingEntry.getLength();i++)
 		{
 			mappedEntries.put(mappingEntry.item(i).getAttributes().getNamedItem("mapKey").getNodeValue().trim(),
-					Integer.parseInt(mappingEntry.item(i).getTextContent()));
+					Integer.parseInt(mappingEntry.item(i).getAttributes().getNamedItem("mappedValue").getNodeValue().trim()));
+			System.out.println(mappingEntry.item(i).getAttributes().getNamedItem("mapKey").getNodeValue().trim()+" aaa "
+					+mappingEntry.item(i).getAttributes().getNamedItem("mappedValue").getNodeValue().trim());
 		}
 		
 		ArrayList<String> correctAns = new ArrayList<String>();
@@ -56,9 +58,9 @@ public class MultipleChoiceFactory extends AbstractQuestionFactory {
 			Node identifier = simpleChoices.item(i).getAttributes().getNamedItem("identifier");
 			AnswerPanel ans = answers.get(i);
 			ans.setText(simpleChoices.item(i).getTextContent());
-			if(mappedEntries.containsKey(simpleChoices.item(i).getTextContent().trim()))
+			if(mappedEntries.containsKey(identifier.getNodeValue().trim()))
 			{
-				ans.setScoreText(mappedEntries.get(simpleChoices.item(i).getTextContent().trim()).toString());
+				ans.setScoreText(mappedEntries.get(identifier.getNodeValue().trim()).toString());
 			}
 			if(correctAns.contains(identifier.getNodeValue()))
 			{
@@ -67,7 +69,7 @@ public class MultipleChoiceFactory extends AbstractQuestionFactory {
 			newAnswers.add(ans);
 		}
 		panel.addAnswers(newAnswers);
-		return null;
+		return panel;
 	}
 
 }
