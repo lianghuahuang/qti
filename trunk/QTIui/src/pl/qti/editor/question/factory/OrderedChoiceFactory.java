@@ -28,7 +28,6 @@ public class OrderedChoiceFactory extends AbstractQuestionFactory {
 		if(simpleChoices.getLength()==0)
 			throw new InvalidXmlException("There are no answers!");
 		NodeList values = questionXml.getElementsByTagName("value");
-		HashMap<String, SimpleAnswer> list = new HashMap<String, SimpleAnswer>();
 		ArrayList<Integer> orderInserted = new ArrayList<Integer>();
 		ArrayList<SimpleAnswer> answers = new ArrayList<SimpleAnswer>();
 		for(int i=0;i<simpleChoices.getLength();i++)
