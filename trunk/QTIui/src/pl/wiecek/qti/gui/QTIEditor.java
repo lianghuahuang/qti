@@ -50,6 +50,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
+import pl.qti.editor.exceptions.InvalidXmlException;
 import pl.qti.editor.parser.QuestionBuilder;
 import pl.wiecek.qti.utils.ComboBoxValues;
 import pl.wiecek.qti.utils.ClassLoader;
@@ -551,6 +552,9 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (ParseException e) {
+				e.printStackTrace();
+			} catch (InvalidXmlException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         } else {
