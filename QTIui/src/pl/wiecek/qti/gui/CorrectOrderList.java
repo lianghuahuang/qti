@@ -28,17 +28,17 @@ import javax.swing.border.TitledBorder;
 public class CorrectOrderList extends JPanel implements ActionListener, MouseListener{
 
 	private static final long serialVersionUID = 1L;
-	private JList jList = null;
-	private JLabel jLabel = null;
-	private JLabel jLabel1 = null;
-	private DefaultListModel model =  new DefaultListModel();
+	private JList orderList = null;
+	private JLabel orderLabelLeft = null;
+	private JLabel orderLabelRigth = null;
+	private DefaultListModel listModel =  new DefaultListModel();
 	private String temp;
 	private int position;
-	private JPanel SouthPanel = null;
+	private JPanel orderSouthPanel = null;
 	private JButton UpButton = null;
 	private JButton DownButton = null;
-	private JLabel InfoLabel = null;
-	private JScrollPane scrollPane;
+	private JLabel orderInfoLabel = null;
+	private JScrollPane listScrollPane;
 
 	/**
 	 * This is the default constructor
@@ -54,23 +54,23 @@ public class CorrectOrderList extends JPanel implements ActionListener, MouseLis
 	 * @return void
 	 */
 	private void initialize() {
-		InfoLabel = new JLabel();
-		InfoLabel.setText("Choose correct order");
-		InfoLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		InfoLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		InfoLabel.setPreferredSize(new Dimension(129, 35));
-		InfoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		jLabel1 = new JLabel();
-		jLabel1.setText("            ");
-		jLabel = new JLabel();
-		jLabel.setText("            ");
+		orderInfoLabel = new JLabel();
+		orderInfoLabel.setText("Choose correct order");
+		orderInfoLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		orderInfoLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		orderInfoLabel.setPreferredSize(new Dimension(129, 35));
+		orderInfoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		orderLabelRigth = new JLabel();
+		orderLabelRigth.setText("            ");
+		orderLabelLeft = new JLabel();
+		orderLabelLeft.setText("            ");
 		this.setSize(551, 290);
 		this.setLayout(new BorderLayout());
 		this.add(getJScrollPane(), BorderLayout.CENTER);
-		this.add(jLabel, BorderLayout.EAST);
-		this.add(jLabel1, BorderLayout.WEST);
+		this.add(orderLabelLeft, BorderLayout.EAST);
+		this.add(orderLabelRigth, BorderLayout.WEST);
 		this.add(getSouthPanel(), BorderLayout.SOUTH);
-		this.add(InfoLabel, BorderLayout.NORTH);
+		this.add(orderInfoLabel, BorderLayout.NORTH);
 		this.setBackground(new Color(221, 236, 251));
 		//this.setBorder(BorderFactory.createTitledBorder(null, "CORRECT ORDERING", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), Color.black));
 		this.setMaximumSize(new Dimension(1680,250));
@@ -84,29 +84,29 @@ public class CorrectOrderList extends JPanel implements ActionListener, MouseLis
 	 * @return javax.swing.JList	
 	 */
 	private JList getJList() {
-		if (jList == null) {
-			jList = new JList(model);
+		if (orderList == null) {
+			orderList = new JList(listModel);
 			//DefaultListModel  model2 = (DefaultListModel) jList.getModel();
-			model.addElement("Test 1");
-			model.addElement("Test 2");
-			model.addElement("Test 3");
+			listModel.addElement("Test 1");
+			listModel.addElement("Test 2");
+			listModel.addElement("Test 3");
 			
-			jList.setFont(new Font("Dialog", Font.BOLD, 12));
-			jList.setForeground(SystemColor.activeCaption);
-			jList.setBackground(SystemColor.control);
-			jList.setAutoscrolls(true);
-			jList.addMouseListener(this);
+			orderList.setFont(new Font("Dialog", Font.BOLD, 12));
+			orderList.setForeground(SystemColor.activeCaption);
+			orderList.setBackground(SystemColor.control);
+			orderList.setAutoscrolls(true);
+			orderList.addMouseListener(this);
 		}
-		return jList;
+		return orderList;
 	}
 	
 	private JScrollPane getJScrollPane() {
-		 scrollPane = new JScrollPane(getJList());
-		 scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		 scrollPane.setPreferredSize(new Dimension(500, 200));
-		 scrollPane.setMinimumSize(new Dimension(500, 198));
-		 scrollPane.setMaximumSize(new Dimension(500, 203));
-		 return scrollPane;
+		 listScrollPane = new JScrollPane(getJList());
+		 listScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		 listScrollPane.setPreferredSize(new Dimension(500, 200));
+		 listScrollPane.setMinimumSize(new Dimension(500, 198));
+		 listScrollPane.setMaximumSize(new Dimension(500, 203));
+		 return listScrollPane;
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class CorrectOrderList extends JPanel implements ActionListener, MouseLis
 		
 		if(source == UpButton)
 		{
-			if((jList.getSelectedIndex() == 0) | (jList.getSelectedIndex() == -1))
+			if((orderList.getSelectedIndex() == 0) | (orderList.getSelectedIndex() == -1))
 				return;
 			else
 			{
@@ -125,7 +125,7 @@ public class CorrectOrderList extends JPanel implements ActionListener, MouseLis
 		}
 		else if(source == DownButton)
 		{
-			if((jList.getSelectedIndex() == model.getSize() - 1) | (jList.getSelectedIndex() == -1))
+			if((orderList.getSelectedIndex() == listModel.getSize() - 1) | (orderList.getSelectedIndex() == -1))
 				return;
 			else
 			{
@@ -137,11 +137,11 @@ public class CorrectOrderList extends JPanel implements ActionListener, MouseLis
 	
 	public void changePosition(int up_down)
 	{
-		position = jList.getSelectedIndex();
-		temp = (String)model.getElementAt(position);
-		model.set(position, model.getElementAt(position + up_down));
-		model.setElementAt(temp, position + up_down);
-		jList.setSelectedIndex(position + up_down);
+		position = orderList.getSelectedIndex();
+		temp = (String)listModel.getElementAt(position);
+		listModel.set(position, listModel.getElementAt(position + up_down));
+		listModel.setElementAt(temp, position + up_down);
+		orderList.setSelectedIndex(position + up_down);
 	}
 
 	@Override
@@ -180,19 +180,19 @@ public class CorrectOrderList extends JPanel implements ActionListener, MouseLis
 	 * @return javax.swing.JPanel	
 	 */
 	private JPanel getSouthPanel() {
-		if (SouthPanel == null) {
+		if (orderSouthPanel == null) {
 			FlowLayout flowLayout = new FlowLayout();
 			flowLayout.setHgap(24);
 			flowLayout.setAlignment(java.awt.FlowLayout.CENTER);
 			flowLayout.setVgap(12);
-			SouthPanel = new JPanel();
-			SouthPanel.setLayout(flowLayout);
-			SouthPanel.setPreferredSize(new Dimension(137, 53));
-			SouthPanel.add(getUpButton(), null);
-			SouthPanel.add(getDownButton(), null);
-			SouthPanel.setBackground(new Color(221, 236, 251));
+			orderSouthPanel = new JPanel();
+			orderSouthPanel.setLayout(flowLayout);
+			orderSouthPanel.setPreferredSize(new Dimension(137, 53));
+			orderSouthPanel.add(getUpButton(), null);
+			orderSouthPanel.add(getDownButton(), null);
+			orderSouthPanel.setBackground(new Color(221, 236, 251));
 		}
-		return SouthPanel;
+		return orderSouthPanel;
 	}
 
 	/**
