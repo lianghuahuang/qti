@@ -1,7 +1,6 @@
 package pl.qti.editor.question.factory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
