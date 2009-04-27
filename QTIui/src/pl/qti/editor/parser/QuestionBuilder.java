@@ -17,8 +17,8 @@ import pl.qti.editor.question.factory.MultiplePairFactory;
 import pl.qti.editor.question.factory.OrderedChoiceFactory;
 import pl.qti.editor.question.factory.SingleChoiceFactory;
 import pl.qti.editor.question.factory.TextQuestionFactory;
-import pl.wiecek.qti.gui.AbstractQuestionPanel;
-import pl.wiecek.qti.gui.QTIEditor;
+import pl.qti.gui.AbstractQuestionPanel;
+import pl.qti.gui.QTIEditor;
 
 
 
