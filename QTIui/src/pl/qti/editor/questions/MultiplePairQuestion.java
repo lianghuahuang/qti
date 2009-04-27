@@ -5,11 +5,11 @@ import org.w3c.dom.NodeList;
 
 import pl.qti.editor.exceptions.InvalidXmlException;
 
-public class MultipleChoiceQuestionData extends AbstractQuestion {
+public class MultiplePairQuestion extends AbstractQuestion {
 
 	@Override
 	public String getText() throws InvalidXmlException {
-		return super.parseText("choiceInteraction");
+		return parseText("associateInteraction");
 	}
 
 }
