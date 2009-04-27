@@ -2,8 +2,8 @@ package pl.qti.editor.question.factory;
 
 import org.w3c.dom.Document;
 
-import pl.wiecek.qti.gui.AbstractQuestionPanel;
-import pl.wiecek.qti.gui.QTIEditor;
+import pl.qti.gui.AbstractQuestionPanel;
+import pl.qti.gui.QTIEditor;
 
 public class MultiplePairFactory extends AbstractQuestionFactory {
 
