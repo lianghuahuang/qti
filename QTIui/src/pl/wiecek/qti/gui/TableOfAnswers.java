@@ -29,15 +29,15 @@ import javax.swing.border.TitledBorder;
 public class TableOfAnswers extends JPanel implements TableModelListener, ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JScrollPane jScrollPane = null;
-	private JTable jTable = null;
-	private JLabel jLabel = null;
-	private JLabel jLabel1 = null;
-	private JLabel jLabel2 = null;
+	private JScrollPane tableScrollPane = null;
+	private JTable answersTable = null;
+	private JLabel tableInfoLabel = null;
+	private JLabel tableLabelLeft = null;
+	private JLabel tableLabelRigth = null;
 	private JButton addButton, delButton;
-	private MyTableModel model;
+	private MyTableModel tableModel;
 	private TableColumn column ;
-	private JPanel SouthPanel;
+	private JPanel tableSouthPanel;
 	private int count;
 	
 
@@ -55,21 +55,21 @@ public class TableOfAnswers extends JPanel implements TableModelListener, Action
 	 * @return void
 	 */
 	private void initialize() {
-		jLabel2 = new JLabel(); 
-		jLabel2.setText("             ");
-		jLabel1 = new JLabel();
-		jLabel1.setText("             ");
-		jLabel = new JLabel();
-		jLabel.setText("Define all the answers in the following table");
-		jLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		jLabel.setPreferredSize(new Dimension(208, 34));
-		jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		tableLabelRigth = new JLabel(); 
+		tableLabelRigth.setText("             ");
+		tableLabelLeft = new JLabel();
+		tableLabelLeft.setText("             ");
+		tableInfoLabel = new JLabel();
+		tableInfoLabel.setText("Define all the answers in the following table");
+		tableInfoLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		tableInfoLabel.setPreferredSize(new Dimension(208, 34));
+		tableInfoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		this.setSize(531, 251);
 		this.setLayout(new BorderLayout());
 		this.add(getJScrollPane(), BorderLayout.CENTER);
-		this.add(jLabel, BorderLayout.NORTH);
-		this.add(jLabel1, BorderLayout.EAST);
-		this.add(jLabel2, BorderLayout.WEST);
+		this.add(tableInfoLabel, BorderLayout.NORTH);
+		this.add(tableLabelLeft, BorderLayout.EAST);
+		this.add(tableLabelRigth, BorderLayout.WEST);
 		this.add(getSouthPanel(), BorderLayout.SOUTH);
 		this.setPreferredSize(new Dimension(500, 250));
 		//this.setBorder(BorderFactory.createTitledBorder(null, "ANSWERS", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), Color.black));
@@ -84,11 +84,11 @@ public class TableOfAnswers extends JPanel implements TableModelListener, Action
 	 * @return javax.swing.JScrollPane	
 	 */
 	private JScrollPane getJScrollPane() {
-		if (jScrollPane == null) {
-			jScrollPane = new JScrollPane();
-			jScrollPane.setViewportView(getJTable());
+		if (tableScrollPane == null) {
+			tableScrollPane = new JScrollPane();
+			tableScrollPane.setViewportView(getJTable());
 		}
-		return jScrollPane;
+		return tableScrollPane;
 	}
 
 	/**
@@ -97,25 +97,25 @@ public class TableOfAnswers extends JPanel implements TableModelListener, Action
 	 * @return javax.swing.JTable	
 	 */
 	private JTable getJTable() {
-		if (jTable == null) {
-			model = new MyTableModel();
-			jTable = new JTable(model);
-			jTable.setRowHeight(20);
-			jTable.setBackground(Color.white);
-			jTable.setForeground(Color.black);
-			jTable.setGridColor(Color.black);
-			jTable.setFont(new Font("Dialog", Font.PLAIN, 12));
-			jTable.getModel().addTableModelListener(this);
-		    column = jTable.getColumnModel().getColumn(0);
+		if (answersTable == null) {
+			tableModel = new MyTableModel();
+			answersTable = new JTable(tableModel);
+			answersTable.setRowHeight(20);
+			answersTable.setBackground(Color.white);
+			answersTable.setForeground(Color.black);
+			answersTable.setGridColor(Color.black);
+			answersTable.setFont(new Font("Dialog", Font.PLAIN, 12));
+			answersTable.getModel().addTableModelListener(this);
+		    column = answersTable.getColumnModel().getColumn(0);
 		    column.setPreferredWidth(5);
 		    column.setResizable(false);
-		    column = jTable.getColumnModel().getColumn(1);
+		    column = answersTable.getColumnModel().getColumn(1);
 		    column.setPreferredWidth(400);
-		    column = jTable.getColumnModel().getColumn(2);
+		    column = answersTable.getColumnModel().getColumn(2);
 		    column.setPreferredWidth(26);
 		    column.setResizable(false);
 		}
-		return jTable;
+		return answersTable;
 	}
 
 	/**
@@ -124,19 +124,19 @@ public class TableOfAnswers extends JPanel implements TableModelListener, Action
 	 * @return javax.swing.JPanel	
 	 */
 	private JPanel getSouthPanel() {
-		if (SouthPanel == null) {
+		if (tableSouthPanel == null) {
 			FlowLayout flowLayout = new FlowLayout();
 			flowLayout.setHgap(24);
 			flowLayout.setAlignment(java.awt.FlowLayout.CENTER);
 			flowLayout.setVgap(12);
-			SouthPanel = new JPanel();
-			SouthPanel.setLayout(flowLayout);
-			SouthPanel.setPreferredSize(new Dimension(137, 53));
-			SouthPanel.add(getAddButton(), null);
-			SouthPanel.add(getDelButton(), null);
-			SouthPanel.setBackground(new Color(221, 236, 251));
+			tableSouthPanel = new JPanel();
+			tableSouthPanel.setLayout(flowLayout);
+			tableSouthPanel.setPreferredSize(new Dimension(137, 53));
+			tableSouthPanel.add(getAddButton(), null);
+			tableSouthPanel.add(getDelButton(), null);
+			tableSouthPanel.setBackground(new Color(221, 236, 251));
 		}
-		return SouthPanel;
+		return tableSouthPanel;
 	}
 	
 	private JButton getDelButton() {
@@ -244,13 +244,13 @@ public class TableOfAnswers extends JPanel implements TableModelListener, Action
 		
 		if(arg0.getSource() == addButton)
 		{
-		    model.insertRow(jTable.getRowCount(),new Object[]  {++count,"", new Boolean(false) });
+		    tableModel.insertRow(answersTable.getRowCount(),new Object[]  {++count,"", new Boolean(false) });
 		}
 		else
 		{
-			if(jTable.getSelectedRow() != -1)
+			if(answersTable.getSelectedRow() != -1)
 			{
-				model.removeRow(jTable.getSelectedRow());
+				tableModel.removeRow(answersTable.getSelectedRow());
 			}
 		}
 	}
