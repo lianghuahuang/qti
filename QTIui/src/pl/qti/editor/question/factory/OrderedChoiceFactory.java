@@ -36,12 +36,15 @@ public class OrderedChoiceFactory extends AbstractQuestionFactory {
 			if(fixed!=null && fixed.getNodeValue().equalsIgnoreCase("true"))
 				sp.setFixed(true);
 			answers.add(sp);
-			for(int k=0;k<values.getLength();k++)
+		}
+		for(int k=0;k<values.getLength();k++)
+		{
+			for(int i=0;i<simpleChoices.getLength();i++)
 			{
 				if(simpleChoices.item(i).getAttributes().getNamedItem("identifier").getNodeValue().trim().
 						equalsIgnoreCase(values.item(k).getTextContent().trim()))
 				{
-					orderInserted.add(k);
+					orderInserted.add(i);
 					break;
 				}
 			}
