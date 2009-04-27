@@ -40,4 +40,31 @@ public abstract class AbstractQuestion {
 
 	public abstract String getText() throws InvalidXmlException;
 
+	public String parseText(String elementName) throws InvalidXmlException
+	{
+		NodeList list = this.itemBody.getChildNodes();
+		Node prompt = null;
+		for(int i=0; i<list.getLength();i++)
+		{
+			if(list.item(i).getNodeName().equals(elementName))
+			{
+				list = list.item(i).getChildNodes();
+				break;
+			}
+		}
+		for(int i=0;i<list.getLength();i++)
+		{
+			if(list.item(i).getNodeName().equals("prompt"))
+			{
+				prompt = list.item(i);
+				break;
+			}			
+		}
+		if(prompt==null)
+		{
+			throw new InvalidXmlException("Invalid XML file!");
+		}
+		return prompt.getTextContent().trim();		
+	}
+	
 }

@@ -10,28 +10,6 @@ public class TextQuestion extends AbstractQuestion {
 	@Override
 	public String getText() throws InvalidXmlException
 	{
-		NodeList list = this.itemBody.getChildNodes();
-		Node prompt = null;
-		for(int i=0; i<list.getLength();i++)
-		{
-			if(list.item(i).getNodeName().equals("extendedTextInteraction"))
-			{
-				list = list.item(i).getChildNodes();
-				break;
-			}
-		}
-		for(int i=0;i<list.getLength();i++)
-		{
-			if(list.item(i).getNodeName().equals("prompt"))
-			{
-				prompt = list.item(i);
-				break;
-			}			
-		}
-		if(prompt==null)
-		{
-			throw new InvalidXmlException("Invalid XML file!");
-		}
-		return prompt.getTextContent().trim();
+		return parseText("extendedTextInteraction");
 	}
 }
