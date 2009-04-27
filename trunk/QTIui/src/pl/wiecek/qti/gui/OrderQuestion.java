@@ -26,7 +26,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 
-import pl.wiecek.qti.gui.TableOfAnswers.MyTableModel;
+import pl.qti.editor.questions.SimpleAnswer;
 
 public class OrderQuestion extends AbstractQuestionPanel implements ActionListener, TableModelListener{
 
@@ -463,6 +463,11 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 		{
 			System.out.println("DELETE");
 		}
+		
+	}
+	
+	public void setAnswers(ArrayList<SimpleAnswer> list)
+	{
 		
 	}
 	
