@@ -30,9 +30,7 @@ public class MultipleChoiceFactory extends AbstractQuestionFactory {
 		//TODO upperBound i lowerBound jak TIT dorobi!
 		//TODO feedback
 		if(simpleChoices.getLength()==0)
-		{
 			throw new InvalidXmlException("There are no answers!");
-		}
 		// utworzenie odpowiedzi w panelu
 		panel.addAnswers(simpleChoices.getLength());
 		ArrayList<AnswerPanel> answers = panel.getAnswers();
