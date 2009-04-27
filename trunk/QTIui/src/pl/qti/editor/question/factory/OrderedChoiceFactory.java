@@ -29,22 +29,26 @@ public class OrderedChoiceFactory extends AbstractQuestionFactory {
 			throw new InvalidXmlException("There are no answers!");
 		NodeList values = questionXml.getElementsByTagName("value");
 		HashMap<String, SimpleAnswer> list = new HashMap<String, SimpleAnswer>();
+		ArrayList<Integer> orderInserted = new ArrayList<Integer>();
+		ArrayList<SimpleAnswer> answers = new ArrayList<SimpleAnswer>();
 		for(int i=0;i<simpleChoices.getLength();i++)
 		{
 			SimpleAnswer sp = new SimpleAnswer(simpleChoices.item(i).getTextContent().trim());
 			Node fixed = simpleChoices.item(i).getAttributes().getNamedItem("fixed");
 			if(fixed!=null & fixed.getNodeValue().equalsIgnoreCase("true"))
 				sp.setFixed(true);
-			list.put(simpleChoices.item(i).getAttributes().getNamedItem("identifier").getNodeValue(), sp);
+			answers.add(sp);
+			for(int k=0;k<values.getLength();k++)
+			{
+				if(simpleChoices.item(i).getAttributes().getNamedItem("identifier").getNodeValue().trim().
+						equalsIgnoreCase(values.item(k).getTextContent().trim()))
+				{
+					orderInserted.add(k);
+					break;
+				}
+			}
 		}
-		ArrayList<SimpleAnswer> answers = new ArrayList<SimpleAnswer>();
-		for(int i=0;i<values.getLength();i++)
-		{
-			if(!list.containsKey(values.item(i).getTextContent().trim()))
-				throw new InvalidXmlException("Invalid XML file! Correct answer is not present in choices!");
-			answers.add(list.get(values.item(i).getTextContent().trim()));
-		}
-		panel.setAnswers(answers);
+		panel.setAnswers(answers, orderInserted);
 		return panel;
 	}
 
