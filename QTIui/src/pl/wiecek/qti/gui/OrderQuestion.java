@@ -466,7 +466,7 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 		
 	}
 	
-	public void setAnswers(ArrayList<SimpleAnswer> list)
+	public void setAnswers(ArrayList<SimpleAnswer> list, ArrayList<Integer> orderInserted)
 	{
 		
 	}
