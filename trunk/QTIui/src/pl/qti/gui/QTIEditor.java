@@ -475,7 +475,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 				numberComboBox.setEnabled(false);
 				answersNumber = 2;
 			}
-			else if(questionType.equals("Open Question") || questionType.equals("Fill in blank Question") || questionType.equals("Correcr Order Question"))
+			else if(questionType.equals("Make Pair Question") || questionType.equals("Open Question") || questionType.equals("Fill in blank Question") || questionType.equals("Correcr Order Question"))
 			{
 				numberComboBox.setSelectedIndex(0);
 				numberComboBox.setEnabled(false);
@@ -520,28 +520,34 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	private void openFiles() throws InvalidXmlException {
 
 		int returnVal = fc.showOpenDialog(QTIEditor.this);
-
+		AbstractQuestionPanel panel = null;
         if (returnVal == JFileChooser.APPROVE_OPTION) 
         {
+            File[] file = fc.getSelectedFiles();
+            for(File f : file)
+            {
+            	if(f.isDirectory())
+            	{
+            		for(File f2 : f.listFiles(new XMLDirectoryFilter()))
+                    {
+            			if(!f2.isDirectory())
+	            			addQuestion(f2, panel );
+                    }
+            	}
+            	else
+            		 addQuestion(f, panel );
+            }
+        } 
+        else 
+        {
         	
-//            File[] file = fc.getSelectedFiles();
-//            System.out.println(file.length);
-//            for(File f : file)
-//            {
-//            	if(f.isDirectory())
-//            	{
-//            		for(File f2 : f.listFiles(new XMLDirectoryFilter()))
-//                    {
-//            			System.out.println("FILE " + f2.getAbsolutePath());
-//                    }
-//            	}
-//            	else
-//            		 System.out.println("FILE" + f.getAbsolutePath());
-//            		
-//            }
-        	File f = fc.getSelectedFile();
-        	try {
-			AbstractQuestionPanel panel =	QuestionBuilder.buildQuestion(f, this);
+        }
+	}
+
+	private void addQuestion(File f, AbstractQuestionPanel panel )
+	{
+		try {
+        	panel =	QuestionBuilder.buildQuestion(f, this);
 			
 			questionList.add(panel);
 			jTabbedPane.removeAll();
@@ -562,17 +568,10 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        } else {
-        }
-
-		
 	}
-
 	private void saveFile() {
-
-
-		
 	}
+	
 
 	/**
 	 * This method initializes menuMainPanel1	
