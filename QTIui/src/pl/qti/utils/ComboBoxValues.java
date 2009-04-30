@@ -15,6 +15,7 @@ public class ComboBoxValues {
 			add("Open Question");
 			add("Fill in blank Question");
 			add("Correcr Order Question");
+			add("Make Pair Question");
 		}
 	};
 	public static final String[] ANSWERS_NUMBER = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }; 
@@ -23,12 +24,13 @@ public class ComboBoxValues {
 	        {  
 				private static final long serialVersionUID = 1L;
 				{  
-	                 put("Simple Question", "pl.wiecek.qti.gui.SimpleChoiceQuestion");  
-	                 put("Multiple Question", "pl.wiecek.qti.gui.MultipleChoiceQuestion");  
-	                 put("Yes No Question", "pl.wiecek.qti.gui.YesNoChoiceQuestion");  
-	                 put("Open Question", "pl.wiecek.qti.gui.OpenQuestion");  
-	                 put("Fill in blank Question", "pl.wiecek.qti.gui.BlankQuestion"); 
-	                 put("Correcr Order Question", "pl.wiecek.qti.gui.OrderQuestion"); 
+	                 put("Simple Question", "pl.qti.gui.SimpleChoiceQuestion");  
+	                 put("Multiple Question", "pl.qti.gui.MultipleChoiceQuestion");  
+	                 put("Yes No Question", "pl.qti.gui.YesNoChoiceQuestion");  
+	                 put("Open Question", "pl.qti.gui.OpenQuestion");  
+	                 put("Fill in blank Question", "pl.qti.gui.BlankQuestion"); 
+	                 put("Correcr Order Question", "pl.qti.gui.OrderQuestion"); 
+	                 put("Make Pair Question", "pl.qti.gui.MakePairQuestion"); 
 	             }  
 	         };
 	public static String getQuestionAlias(String question)
