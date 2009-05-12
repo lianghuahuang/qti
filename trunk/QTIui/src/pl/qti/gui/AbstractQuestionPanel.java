@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import javax.swing.JTextArea;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,6 +21,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
+import javax.swing.border.TitledBorder;
+
 import java.awt.ComponentOrientation;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -31,15 +34,22 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private JTextArea jTextArea = null;
 	private JLabel titleLabel = null;
-	private JLabel SouthLabel = null;
 	private JScrollPane scrollPane = null;
 	private JPanel NPanel = null;
+	private JPanel ValuesPanel = null;
+	private JPanel NameValuesPanel = null;
 	private JPanel newQuestionNamePanel = null;
 	private JLabel newNameLabel = null;
 	private JTextField newNameTextField = null;
 	private JButton newNameButton = null;
 	private QTIEditor editor = null;
 	private DefaultListModel model;
+	private JLabel lowerBoundLabel;
+	private JLabel upperBoundLabel;
+	private JLabel defaultValueLabel;
+	private JTextField lowerBoundText;
+	private JTextField upperBoundText;
+	private JTextField defaultValueText;
 
 	/**
 	 * This is the default constructor
@@ -62,7 +72,6 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	 * @return void
 	 */
 	private void initialize() {
-		SouthLabel = new JLabel("BLE BLE BLE");
 		titleLabel = new JLabel("QUESTION");
 		titleLabel.setHorizontalAlignment(JLabel.CENTER);
 		titleLabel.setFont(new Font("DialogInput", Font.BOLD, 14));
@@ -76,13 +85,14 @@ public abstract class AbstractQuestionPanel extends JPanel{
 		NPanel.add(getScrollPane(), BorderLayout.CENTER);
 		NPanel.add(new JLabel("                "), BorderLayout.EAST);
 		NPanel.add(new JLabel("                "), BorderLayout.WEST);
-		SouthLabel.setPreferredSize(new Dimension(710, 24));
-		NPanel.add(getNewQuestionNamePanel(), BorderLayout.SOUTH);
+		NPanel.add(getNameVauesPanel(), BorderLayout.SOUTH);
 		
 		this.setLayout(new BorderLayout());
 		this.setSize(705, 500);
 		this.add(NPanel, BorderLayout.NORTH);
 		this.setBackground(new Color(221, 236, 251));
+		//setValuesPanel();
+		//upperDisable();
 	}
 
 	/**
@@ -112,7 +122,8 @@ public abstract class AbstractQuestionPanel extends JPanel{
 			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			scrollPane.setEnabled(false);
 			scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-			scrollPane.setPreferredSize(new Dimension(50, 120));
+			scrollPane.setPreferredSize(new Dimension(400, 60));
+			scrollPane.setMaximumSize(new Dimension(400, 60));
 			scrollPane.setViewportView(getJTextArea());
 			scrollPane.setVisible(true);
 		}
@@ -154,22 +165,72 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	}
 	
 	private JPanel getNewQuestionNamePanel() {
-		newQuestionNamePanel = new JPanel();
-		newQuestionNamePanel.setBackground(new Color(221, 236, 251));
-		FlowLayout flowLayout = new FlowLayout();
-		flowLayout.setHgap(21);
-		flowLayout.setAlignment(java.awt.FlowLayout.CENTER);
-		flowLayout.setVgap(11);
-		newNameLabel = new JLabel();
-		newNameLabel.setText("Insert new question name");
-		newNameLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		newQuestionNamePanel.setLayout(flowLayout);
-		newQuestionNamePanel.setSize(new Dimension(710, 44));
-		newQuestionNamePanel.add(newNameLabel, null);
-		newQuestionNamePanel.add(getNewNameJTextField(), null);
-		newQuestionNamePanel.add(getNewNameJButton(), null);
+		if (newQuestionNamePanel == null) {
+			newQuestionNamePanel = new JPanel();
+			newQuestionNamePanel.setBackground(new Color(221, 236, 251));
+			FlowLayout flowLayout = new FlowLayout();
+			flowLayout.setHgap(21);
+			flowLayout.setAlignment(java.awt.FlowLayout.CENTER);
+			flowLayout.setVgap(11);
+			newNameLabel = new JLabel();
+			newNameLabel.setText("Insert new question name");
+			newNameLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
+			newQuestionNamePanel.setLayout(flowLayout);
+			newQuestionNamePanel.setSize(new Dimension(710, 44));
+			newQuestionNamePanel.add(newNameLabel, null);
+			newQuestionNamePanel.add(getNewNameJTextField(), null);
+			newQuestionNamePanel.add(getNewNameJButton(), null);
+		}
 		return newQuestionNamePanel;
 	}
+	
+	private JPanel getVauesPanel() {
+		if (ValuesPanel == null) {
+			ValuesPanel = new JPanel();
+			ValuesPanel.setBackground(new Color(221, 236, 251));
+			FlowLayout flowLayout = new FlowLayout();
+			flowLayout.setHgap(21);
+			flowLayout.setAlignment(java.awt.FlowLayout.CENTER);
+			//flowLayout.setVgap(5);
+			lowerBoundLabel = new JLabel();
+			lowerBoundLabel.setText("Lower Bound");
+			lowerBoundLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
+			upperBoundLabel = new JLabel();
+			upperBoundLabel.setText("Upper Bound");
+			upperBoundLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
+			defaultValueLabel = new JLabel();
+			defaultValueLabel.setText("Default Value");
+			defaultValueLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
+			upperBoundText = new JTextField();
+			upperBoundText.setPreferredSize(new Dimension(60, 20));
+			lowerBoundText = new JTextField();
+			lowerBoundText.setPreferredSize(new Dimension(60, 20));
+			defaultValueText = new JTextField();
+			defaultValueText.setPreferredSize(new Dimension(60, 20));
+			ValuesPanel.setLayout(flowLayout);
+			ValuesPanel.setSize(new Dimension(710, 44));
+			ValuesPanel.add(lowerBoundLabel, null);
+			ValuesPanel.add(lowerBoundText, null);
+			ValuesPanel.add(upperBoundLabel, null);
+			ValuesPanel.add(upperBoundText, null);
+			ValuesPanel.add(defaultValueLabel, null);
+			ValuesPanel.add(defaultValueText, null);
+			ValuesPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(SystemColor.inactiveCaption, 1), "Values", TitledBorder.CENTER, TitledBorder.TOP, new Font("Tahoma", Font.BOLD, 11), new Color(0, 70, 213)));
+		}
+		return ValuesPanel;
+	}
+	
+	private JPanel getNameVauesPanel() {
+		if (NameValuesPanel == null) {
+			NameValuesPanel = new JPanel();
+			NameValuesPanel.setBackground(new Color(221, 236, 251));
+			NameValuesPanel.setLayout(new BorderLayout());
+			NameValuesPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+			NameValuesPanel.add(getNewQuestionNamePanel(), BorderLayout.NORTH);
+		}
+		return NameValuesPanel;
+	}
+	
 
 	// ABSTRACT METHODS - need to implement in subclasses
 	public abstract void saveToXML();
@@ -188,6 +249,29 @@ public abstract class AbstractQuestionPanel extends JPanel{
 
 	public void setText(String text) {
 		jTextArea.setText(text);
+	}
+	
+	public void upperDisable()
+	{
+		upperBoundText.setEnabled(false);
+		upperBoundLabel.setEnabled(false);
+	}
+	
+	public void lowerDisable()
+	{
+		lowerBoundText.setEnabled(false);
+		lowerBoundLabel.setEnabled(false);
+	}
+	
+	public void defaultDisable()
+	{
+		defaultValueText.setEnabled(false);
+		defaultValueLabel.setEnabled(false);
+	}
+	
+	public void setValuesPanel()
+	{
+		NameValuesPanel.add(getVauesPanel(), BorderLayout.CENTER);
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
