@@ -91,8 +91,7 @@ public abstract class AbstractQuestionPanel extends JPanel{
 		this.setSize(705, 500);
 		this.add(NPanel, BorderLayout.NORTH);
 		this.setBackground(new Color(221, 236, 251));
-		//setValuesPanel();
-		//upperDisable();
+		setValuesPanel();
 	}
 
 	/**
