@@ -1,6 +1,7 @@
 package pl.qti.editor.question.factory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -32,6 +33,7 @@ public class SingleChoiceFactory extends AbstractQuestionFactory {
 			this.questionPanel = new YesNoChoiceQuestion(editor);
 		}
 		super.makeHeader();
+		HashMap<String, String> feedbacks = QuestionsUtilities.getFeedbacks(questionXml.getElementsByTagName("feedbackInline"));
 		SimpleChoiceQuestion panel = (SimpleChoiceQuestion)this.questionPanel;
 
 		NodeList list = questionXml.getElementsByTagName("correctResponse").item(0).getChildNodes();
@@ -44,6 +46,10 @@ public class SingleChoiceFactory extends AbstractQuestionFactory {
 				break;
 			}
 		}
+		
+		// is shuffle?
+		
+		
 		if(value==null)
 			throw new InvalidXmlException("Invalid XML, correct response was not provided.");
 		panel.addAnswers(simpleChoices.getLength());
@@ -54,7 +60,12 @@ public class SingleChoiceFactory extends AbstractQuestionFactory {
 		{
 			AnswerPanel ans = answers.get(i);
 			Node identifier = simpleChoices.item(i).getAttributes().getNamedItem("identifier");
-			ans.setText(simpleChoices.item(i).getTextContent().trim());
+			Node question = QuestionsUtilities.removeChilds(simpleChoices.item(i));
+			ans.setText(question.getTextContent().trim());
+			if(feedbacks.containsKey(identifier.getNodeValue()))
+			{
+				ans.setFeedback(feedbacks.get(identifier.getNodeValue()).trim());
+			}
 			if(value.equalsIgnoreCase(identifier.getNodeValue()))
 			{
 				ans.setRadioButton(true);

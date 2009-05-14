@@ -272,5 +272,20 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	{
 		NameValuesPanel.add(getVauesPanel(), BorderLayout.CENTER);
 	}
+	
+	public void setLowerBound(String lower)
+	{
+		lowerBoundText.setText(lower);
+	}
+	
+	public void setUpperBound(String upper)
+	{
+		upperBoundText.setText(upper);
+	}
+	
+	public void setDefaultValue(String defaultVal)
+	{
+		defaultValueText.setText(defaultVal);
+	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
