@@ -28,7 +28,19 @@ public class MultipleChoiceFactory extends AbstractQuestionFactory {
 		NodeList simpleChoices = questionXml.getElementsByTagName("simpleChoice");
 		NodeList mappingEntry = questionXml.getElementsByTagName("mapEntry");
 		//TODO upperBound i lowerBound jak TIT dorobi!
-		//TODO feedback
+		NodeList mapping = questionXml.getElementsByTagName("mapping");
+		String upperBound = "";
+		if(mapping.item(0).getAttributes().getNamedItem("upperBound")!=null)
+			upperBound = mapping.item(0).getAttributes().getNamedItem("upperBound").getNodeValue();
+		String lowerBound = "";
+		if(mapping.item(0).getAttributes().getNamedItem("lowerBound")!=null)
+			lowerBound = mapping.item(0).getAttributes().getNamedItem("lowerBound").getNodeValue();
+		String defaultValue = mapping.item(0).getAttributes().getNamedItem("defaultValue").getNodeValue();
+		panel.setUpperBound(upperBound);
+		panel.setLowerBound(lowerBound);
+		panel.setDefaultValue(defaultValue);
+		
+		HashMap<String, String> feedbacks = QuestionsUtilities.getFeedbacks(questionXml.getElementsByTagName("feedbackInline"));
 		if(simpleChoices.getLength()==0)
 			throw new InvalidXmlException("There are no answers!");
 		// utworzenie odpowiedzi w panelu
@@ -55,7 +67,12 @@ public class MultipleChoiceFactory extends AbstractQuestionFactory {
 		{
 			Node identifier = simpleChoices.item(i).getAttributes().getNamedItem("identifier");
 			AnswerPanel ans = answers.get(i);
-			ans.setText(simpleChoices.item(i).getTextContent());
+			Node question = QuestionsUtilities.removeChilds(simpleChoices.item(i));
+			ans.setText(question.getTextContent());
+			if(feedbacks.containsKey(identifier.getNodeValue()))
+			{
+				ans.setFeedback(feedbacks.get(identifier.getNodeValue()).trim());
+			}
 			if(mappedEntries.containsKey(identifier.getNodeValue().trim()))
 			{
 				ans.setScoreText(mappedEntries.get(identifier.getNodeValue().trim()).toString());
