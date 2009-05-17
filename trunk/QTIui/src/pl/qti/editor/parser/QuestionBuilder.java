@@ -15,6 +15,7 @@ import pl.qti.editor.question.factory.AbstractQuestionFactory;
 import pl.qti.editor.question.factory.MultipleChoiceFactory;
 import pl.qti.editor.question.factory.MultiplePairFactory;
 import pl.qti.editor.question.factory.OrderedChoiceFactory;
+import pl.qti.editor.question.factory.PairQuestionFactory;
 import pl.qti.editor.question.factory.SingleChoiceFactory;
 import pl.qti.editor.question.factory.TextQuestionFactory;
 import pl.qti.gui.AbstractQuestionPanel;
@@ -75,6 +76,8 @@ public class QuestionBuilder {
 	        		questionFactory = new TextQuestionFactory();
 	        		// create Text question factory http://www.imsglobal.org/question/qti_v2p0/examples/items/extended_text.xml
 	        		break;
+	        	case 5:
+	        		questionFactory = new PairQuestionFactory();
 	        	default:
 	        		throw new ParseException("Provided file does not contain proper QTI question!", 0);
 	        		
@@ -93,6 +96,7 @@ public class QuestionBuilder {
 			values.put("ordered.identifier", 2);
 			values.put("multiple.pair", 3);
 			values.put("single.string", 4);
+			values.put("multiple.pair", 5);
 		}
 		return values;
 	}
