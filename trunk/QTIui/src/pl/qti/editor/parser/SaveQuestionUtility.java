@@ -33,11 +33,15 @@ public class SaveQuestionUtility {
 	public static String TIMEDEP = "timeDependent";
 	public static String CARDINALITY = "cardinality";
 	public static String BASET = "baseType";
+	public static String CORRECT_RESPONSE = "correctResponse";
 	
 	public static String RESPONSE = "responseDeclaration";
 	public static String OUTCOME = "outcomeDeclaration";
 	public static String ITEMB = "itemBody";
 	public static String PROMPT = "prompt";
+	public static String VALUE = "value";
+	public static String DEFAULTV = "defaultValue";
+	public static String FEEDBACK = "feedbackInline";
 	
 	public SaveQuestionUtility() throws XmlSaveException
 	{
