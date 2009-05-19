@@ -36,7 +36,7 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	private JLabel titleLabel = null;
 	private JScrollPane scrollPane = null;
 	private JPanel NPanel = null;
-	private JPanel ValuesPanel = null;
+	protected JPanel ValuesPanel = null;
 	private JPanel NameValuesPanel = null;
 	private JPanel newQuestionNamePanel = null;
 	private JLabel newNameLabel = null;
