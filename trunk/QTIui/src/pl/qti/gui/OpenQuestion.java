@@ -2,6 +2,9 @@ package pl.qti.gui;
 
 import java.util.ArrayList;
 
+import pl.qti.editor.exceptions.XmlSaveException;
+import pl.qti.editor.question.factory.TextQuestionFactory;
+
 public class OpenQuestion extends AbstractQuestionPanel{
 
 	private static final long serialVersionUID = 1L;
@@ -40,7 +43,12 @@ public class OpenQuestion extends AbstractQuestionPanel{
 
 	@Override
 	public void saveToXML() {
-		// TODO Auto-generated method stub
+		try {
+			TextQuestionFactory.saveQuestion("test", "aaa", "C:\\buc.xml");
+		} catch (XmlSaveException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
