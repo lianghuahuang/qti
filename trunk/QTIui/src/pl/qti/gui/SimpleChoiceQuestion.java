@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 
+import pl.qti.editor.exceptions.XmlSaveException;
+import pl.qti.editor.question.factory.SingleChoiceFactory;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -114,7 +117,13 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 	}
 	@Override
 	public void saveToXML() {
-		// TODO save to XML file
+		// dodac przekazywanie tresci pytania, filename i czy jest shuffle
+		try {
+			SingleChoiceFactory.saveQuestion(choiceList, getName(), "pytanie", "c:\buc.xml", "false");
+		} catch (XmlSaveException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
