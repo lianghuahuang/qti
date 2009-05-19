@@ -133,18 +133,21 @@ public class SingleChoiceFactory extends AbstractQuestionFactory {
 				feedback.setTextContent(a.getFeedback().trim());
 				simpleChoice.appendChild(feedback);
 			}
+			//TODO fixed?
 			simpleChoice.setTextContent(a.getText().trim());
 			extended.appendChild(simpleChoice);
 		}
 		itemBody.appendChild(extended);
 		
+		Element responseProc = doc.createElement(SaveQuestionUtility.RESPONSE_PROC);
+		responseProc.setAttribute("template", "http://www.imsglobal.org/question/qti_v2p0/rptemplates/match_correct");
+		
 		assessmentItem.appendChild(response);
 		assessmentItem.appendChild(outcome);
 		assessmentItem.appendChild(itemBody);
+		assessmentItem.appendChild(responseProc);
 		doc.appendChild(assessmentItem);
 		SaveQuestionUtility.save(doc, filename);
-		
-		
 	}
 
 }
