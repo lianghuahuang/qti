@@ -116,6 +116,8 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	private JMenuItem saveSelectedItem = null;
 	private JMenuItem newQuestionItem = null;
 	private JMenuItem exitEditorItem = null;
+	
+	private DefaultListModel model;
 
 	
 	/**
@@ -295,7 +297,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	 * @return javax.swing.JList	
 	 */
 	private JList getJList() {
-	    DefaultListModel model = new DefaultListModel();
+	    model = new DefaultListModel();
 		if (questionsList == null) {
 			questionsList = new JList(model);
 			
@@ -502,7 +504,6 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 				e1.printStackTrace();
 			}
 		}
-		// zapisz wszystkie pytania
 		else if(source == saveItem)
 		{
 			if(questionList.size() == 0)
@@ -516,21 +517,26 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 				if (response == JOptionPane.NO_OPTION) 
 				{
 				      System.out.println("Cancel SAVE");
-				    } else if (response == JOptionPane.YES_OPTION) {
-				    	saveFile(false);
-				    	questionList.get(0).saveToXML(null);
-				    } else if (response == JOptionPane.CLOSED_OPTION) {
+				} 
+				else if (response == JOptionPane.YES_OPTION) 
+				    {
+				    	String path = saveFile(false);
+						for(int all = 0; all < questionList.size(); all++)
+						{
+							questionList.get(all).saveToXML(path + (String)model.getElementAt(all) + ".xml");
+						}
+				    } else if (response == JOptionPane.CLOSED_OPTION)
+				    {
 				      System.out.println("JOptionPane closed");
 				    }
 			}
 		}
-		// zapisz wybrane pytania
 		else if(source == saveSelectedItem)
 		{
+			String path = saveFile(false);
 			for(int sel : questionsList.getSelectedIndices())
 			{
-				System.out.println(sel);
-				questionList.get(sel).saveToXML(null);
+				questionList.get(sel).saveToXML(path + (String)model.getElementAt(sel) + ".xml");
 			}
 		}
 		else if(source == exitEditorItem)
@@ -594,8 +600,8 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	private String saveFile(boolean isFileName) {
 		
 		String filename = "";
-		if(!isFileName)
-		 fc.setSelectedFile(new File("Choose only a directory"));
+		//if(!isFileName)
+		// fc.setSelectedFile(new File("Choose only a directory"));
 		
 		int returnVal = fc.showSaveDialog(QTIEditor.this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) 
