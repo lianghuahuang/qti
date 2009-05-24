@@ -42,6 +42,16 @@ public class MultipleChoiceFactory extends AbstractQuestionFactory {
 		panel.setUpperBound(upperBound);
 		panel.setLowerBound(lowerBound);
 		panel.setDefaultValue(defaultValue);
+	
+		// is shuffle?
+		Node attr = questionXml.getElementsByTagName("choiceInteraction").item(0).getAttributes().getNamedItem("shuffle");
+		Boolean isShuffle = false;
+		if(attr!=null)
+		{
+			if(attr.getTextContent().equalsIgnoreCase("true"))
+				isShuffle = true;
+		}
+		panel.setShuffleValue(isShuffle);
 		
 		HashMap<String, String> feedbacks = QuestionsUtilities.getFeedbacks(questionXml.getElementsByTagName("feedbackInline"));
 		if(simpleChoices.getLength()==0)
@@ -134,14 +144,15 @@ public class MultipleChoiceFactory extends AbstractQuestionFactory {
 			}
 			Element simpleChoice = doc.createElement("simpleChoice");
 			simpleChoice.setAttribute(SaveQuestionUtility.IDENTIFIER, i+"");
+			simpleChoice.setTextContent(a.getText().trim());
 			if(a.getFeedback().trim().length()>0)
 			{
 				Element feedback = doc.createElement(SaveQuestionUtility.FEEDBACK);
 				feedback.setTextContent(a.getFeedback().trim());
+				feedback.setAttribute(SaveQuestionUtility.IDENTIFIER, i+"");
 				simpleChoice.appendChild(feedback);
 			}
 			simpleChoice.setAttribute("fixed", "false");
-			simpleChoice.setTextContent(a.getText().trim());
 			extended.appendChild(simpleChoice);
 			
 			i++;
