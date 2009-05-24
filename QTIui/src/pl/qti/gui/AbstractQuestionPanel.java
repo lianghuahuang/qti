@@ -316,5 +316,21 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	{
 		defaultValueText.setText(defaultVal);
 	}
+	
+	public ArrayList<String> getScoreValues()
+	{
+		ArrayList<String> values = new ArrayList<String>();
+		values.add(lowerBoundText.getText());
+		values.add(upperBoundText.getText());
+		values.add(defaultValueText.getText());
+		return values;
+	}
+	
+	public void setScoreValues(ArrayList<String> values)
+	{
+		setLowerBound(values.get(0));
+		setUpperBound(values.get(1));
+		setDefaultValue(values.get(2));
+	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
