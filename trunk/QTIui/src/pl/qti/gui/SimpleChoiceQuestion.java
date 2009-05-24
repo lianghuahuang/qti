@@ -20,12 +20,12 @@ import java.awt.event.ActionListener;
 public class SimpleChoiceQuestion extends AbstractQuestionPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private JScrollPane jScrollPane;  //  @jve:decl-index=0:visual-constraint="96,118"
-	private JPanel jPanel, mainPanel;
+	public JScrollPane jScrollPane;  //  @jve:decl-index=0:visual-constraint="96,118"
+	public JPanel jPanel, mainPanel;
 	private ArrayList<AnswerPanel> choiceList= new ArrayList<AnswerPanel>();  //  @jve:decl-index=0:
-	private int answerCount;
-	private int position = 5;
-	private final int height = 48;
+	public int answerCount;
+	public int position = 5;
+	public final int height = 48;
 	private static final int MAX_QUESTIONS = 10;
 	private AnswerAddPanel ap = null;
 	
@@ -135,7 +135,7 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 	public void addAnswers(int count) {
 		for(int i = 0; i < count; i++)
 		{
-			AnswerPanel choice = new AnswerPanel(0, position, this);
+			AnswerPanel choice = new AnswerPanel(0, position, this, false);
 			choice.setNrLabel((choiceList.size() + 1) + "");
 			choiceList.add(choice);
 			jPanel.add(choice);	

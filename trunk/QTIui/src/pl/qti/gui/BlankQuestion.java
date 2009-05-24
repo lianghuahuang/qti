@@ -47,7 +47,7 @@ public class BlankQuestion extends AbstractQuestionPanel implements ActionListen
 	private StyledDocument doc;
 	private MutableAttributeSet attr = new SimpleAttributeSet();
 	private ArrayList<BlankField> blanks = new ArrayList<BlankField>();
-	private AnswerPanel blankInfo = new AnswerPanel(0, 75, this);
+	private AnswerPanel blankInfo = new AnswerPanel(0, 75, this, true);
 	private AnswerDescriptionInfo answerDesc = new AnswerDescriptionInfo();
 	private BlankField addedBlank;
 	private int position, start, end;
@@ -368,7 +368,7 @@ public class BlankQuestion extends AbstractQuestionPanel implements ActionListen
 			addedBlank.setContent(textPane.getSelectedText());
 			addedBlank.setStart(offset);
 			addedBlank.setEnd(length + offset);
-			blankInfo = new AnswerPanel(0,75,this);
+			blankInfo = new AnswerPanel(0,75,this, true);
 			blankInfo.getJTextArea().setEditable(false);
 			blankInfo.getRadioButton().setSelected(true);
 			blankInfo.getRadioButton().setEnabled(false);
