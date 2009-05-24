@@ -309,7 +309,7 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 	public void removeAnswerAt(int index) {
 	}
 	@Override
-	public void saveToXML() {
+	public void saveToXML(String path) {
 	}
 	@Override
 	public void addAnswers(ArrayList<AnswerPanel> answers) {

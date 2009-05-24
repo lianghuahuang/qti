@@ -314,7 +314,7 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 	public void removeAnswerAt(int index) {
 	}
 	@Override
-	public void saveToXML() {
+	public void saveToXML(String path) {
 	}
 
 	@Override
