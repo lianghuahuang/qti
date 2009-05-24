@@ -311,6 +311,7 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 	}
 	@Override
 	public void saveToXML(String path) throws XmlSaveException {
+		
 	}
 	@Override
 	public void addAnswers(ArrayList<AnswerPanel> answers) {
@@ -496,6 +497,65 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 		count = row;
 	}
 	
-	//------------------------------------------------------
+	public ArrayList<OrderAnswer> getAnswersClass()
+	{
+		ArrayList<OrderAnswer> list = new ArrayList<OrderAnswer>();
+		OrderAnswer answer;
+		for(int i = 0; i < tableModel.getRowCount(); i++)
+		{
+			String content = (String)tableModel.getValueAt(i, 1);
+			answer = new OrderAnswer();
+			answer.setContent(content);
+			answer.setFixed((Boolean)tableModel.getValueAt(i, 2));
+
+			for(int j = 0; j < listModel.size(); j++)
+			{
+				if(((String)listModel.getElementAt(j)).equals(content))
+				{
+					answer.setPosition(j);
+					break;
+				}
+			}
+			list.add(answer);
+		}
+		return list;
+	}
+	
+	
+	class OrderAnswer
+	{
+		private String content;
+		private int position;
+		private boolean isFixed;
+		
+		public OrderAnswer()
+		{
+		}
+		
+		public OrderAnswer(String content, int position, boolean isFixed)
+		{
+			this.content = content;
+			this.position = position;
+			this.isFixed = isFixed;
+		}
+		public String getContent() {
+			return content;
+		}
+		public void setContent(String content) {
+			this.content = content;
+		}
+		public int getPosition() {
+			return position;
+		}
+		public void setPosition(int position) {
+			this.position = position;
+		}
+		public boolean isFixed() {
+			return isFixed;
+		}
+		public void setFixed(boolean isFixed) {
+			this.isFixed = isFixed;
+		}
+	}
 
 }
