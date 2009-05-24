@@ -48,6 +48,8 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 	private JScrollPane pairTableScrollPane;
 	private JPanel pairTableSouthPanel;
 	
+	private JScrollPane jScrollPane = null;
+	
 	private TableColumn answersColumn;
 	private TableColumn pairColumn, pairColumn_1, pairColumn_2;
 	private AnswersTableModel answersTableModel;
@@ -62,7 +64,16 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 	public MakePairQuestion(QTIEditor editor)
 	{
 		super(editor);
-		super.add(getMainPanel(), BorderLayout.CENTER);
+		super.add(getJScrollPane(), BorderLayout.CENTER);
+	}
+	
+	private JScrollPane getJScrollPane() {
+		if (jScrollPane == null) {
+			jScrollPane = new JScrollPane();
+			jScrollPane.setViewportView(getMainPanel());
+			jScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		}
+		return jScrollPane;
 	}
 	
 	private JPanel getMainPanel() {

@@ -47,6 +47,7 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 	private JLabel orderInfoLabel = null;
 	private JScrollPane listScrollPane;
 	private JScrollPane tableScrollPane = null;
+	private JScrollPane jScrollPane = null;
 	private JTable answersTable = null;
 	private JLabel tableInfoLabel = null;
 	private JLabel tableLabelLeft = null;
@@ -63,7 +64,7 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 	
 	public OrderQuestion(QTIEditor editor) {
 		super(editor);
-		super.add(getMainPanel(), BorderLayout.CENTER);
+		super.add(getJScrollPane(), BorderLayout.CENTER);
 	}
 
 	/**
@@ -71,6 +72,17 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 	 * 	
 	 * @return javax.swing.JPanel	
 	 */
+	
+	
+	private JScrollPane getJScrollPane() {
+		if (jScrollPane == null) {
+			jScrollPane = new JScrollPane();
+			jScrollPane.setViewportView(getMainPanel());
+			jScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		}
+		return jScrollPane;
+	}
+	
 	private JPanel getMainPanel() {
 		if (MainPanel == null) {
 			MainPanel = new JPanel();
