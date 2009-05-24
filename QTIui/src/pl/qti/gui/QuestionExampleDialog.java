@@ -1,30 +1,38 @@
 package pl.qti.gui;
 
 import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.awt.Toolkit;
+
 import javax.swing.JDialog;
 import javax.swing.WindowConstants;
 import javax.swing.JLabel;
-import java.awt.Rectangle;
 import javax.swing.ImageIcon;
-import java.awt.Dimension;
-import javax.swing.JButton;
-import java.awt.Font;
 
-public class QuestionExampleDialog extends JDialog {
+import pl.qti.utils.ComboBoxValues;
+
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class QuestionExampleDialog extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
 	private JLabel imageLabel = null;
-	private JButton okButton = null;
 	private JLabel infoLabel = null;
+	private int h;
+	private int w;
 
 	/**
 	 * @param owner
 	 */
-	public QuestionExampleDialog(Frame owner, String tittle) {
-		super(owner, tittle);
-		initialize();
+	public QuestionExampleDialog(Frame owner, String questionType) {
+		super(owner, questionType);
+		initialize(questionType);
 	}
 
 	/**
@@ -32,10 +40,10 @@ public class QuestionExampleDialog extends JDialog {
 	 * 
 	 * @return void
 	 */
-	private void initialize() {
-		this.setSize(636, 410);
+	private void initialize(String questionType) {
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		this.setContentPane(getJContentPane());
+		this.setContentPane(getJContentPane(questionType));
+		this.setSize(h, w + 70);
 	}
 
 	/**
@@ -43,37 +51,30 @@ public class QuestionExampleDialog extends JDialog {
 	 * 
 	 * @return javax.swing.JPanel
 	 */
-	private JPanel getJContentPane() {
+	private JPanel getJContentPane(String questionType) {
 		if (jContentPane == null) {
 			infoLabel = new JLabel();
-			infoLabel.setBounds(new Rectangle(15, 9, 329, 30));
 			infoLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
-			infoLabel.setText("This question will look like this:");
+			infoLabel.setText("  This question will look like this:");
 			imageLabel = new JLabel();
-			imageLabel.setBounds(new Rectangle(11, 46, 610, 273));
-			imageLabel.setIcon(new ImageIcon(getClass().getResource("/icons/MultipleChoice_item.jpg")));
+			ImageIcon icon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource(ComboBoxValues.getImageAlias(questionType))));
+			//ImageIcon icon = new ImageIcon(getClass().getResource(ComboBoxValues.getImageAlias(questionType)));
+			w = icon.getIconHeight();
+			h = icon.getIconWidth();
+			imageLabel.setIcon(icon);
 			imageLabel.setText("");
 			jContentPane = new JPanel();
-			jContentPane.setLayout(null);
-			jContentPane.add(imageLabel, null);
-			jContentPane.add(getOkButton(), null);
-			jContentPane.add(infoLabel, null);
+			jContentPane.setLayout(new BorderLayout());
+			jContentPane.add(imageLabel, BorderLayout.CENTER);
+			jContentPane.add(infoLabel, BorderLayout.NORTH);
 		}
 		return jContentPane;
 	}
 
-	/**
-	 * This method initializes okButton	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getOkButton() {
-		if (okButton == null) {
-			okButton = new JButton();
-			okButton.setBounds(new Rectangle(264, 336, 90, 29));
-			okButton.setText("OK");
-		}
-		return okButton;
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		this.dispose();
+		//System.exit(1);
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
