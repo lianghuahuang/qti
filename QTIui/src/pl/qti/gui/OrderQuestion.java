@@ -26,6 +26,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 
+import pl.qti.editor.exceptions.XmlSaveException;
 import pl.qti.editor.questions.SimpleAnswer;
 
 public class OrderQuestion extends AbstractQuestionPanel implements ActionListener, TableModelListener{
@@ -309,7 +310,7 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 	public void removeAnswerAt(int index) {
 	}
 	@Override
-	public void saveToXML(String path) {
+	public void saveToXML(String path) throws XmlSaveException {
 	}
 	@Override
 	public void addAnswers(ArrayList<AnswerPanel> answers) {

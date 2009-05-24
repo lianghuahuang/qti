@@ -51,6 +51,7 @@ import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
 import pl.qti.editor.exceptions.InvalidXmlException;
+import pl.qti.editor.exceptions.XmlSaveException;
 import pl.qti.editor.parser.QuestionBuilder;
 import pl.qti.utils.ClassLoader;
 import pl.qti.utils.ComboBoxValues;
@@ -389,10 +390,17 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		      {
 		    	  String fileName = saveFile(true);
 		    	  
-		    	  if(!fileName.contains(".xml"))
-		    		  questionList.get(currentSelected).saveToXML(fileName + ".xml");
-		    	  else
-		    		  questionList.get(currentSelected).saveToXML(fileName);
+		    	  try {
+		    		  if(!fileName.contains(".xml"))
+						  questionList.get(currentSelected).saveToXML(fileName + ".xml");
+		    		  else
+		    		      questionList.get(currentSelected).saveToXML(fileName);
+					
+					}
+		    	   catch (XmlSaveException e1) 
+		    	    {
+						e1.printStackTrace();
+					}
 		      }
 		      });
 	}
@@ -527,7 +535,11 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 				    	String path = saveFile(false);
 						for(int all = 0; all < questionList.size(); all++)
 						{
-							questionList.get(all).saveToXML(path + (String)model.getElementAt(all) + ".xml");
+							try {
+								questionList.get(all).saveToXML(path + (String)model.getElementAt(all) + ".xml");
+							} catch (XmlSaveException e1) {
+								e1.printStackTrace();
+							}
 						}
 				    } else if (response == JOptionPane.CLOSED_OPTION)
 				    {
@@ -540,7 +552,11 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 			String path = saveFile(false);
 			for(int sel : questionsList.getSelectedIndices())
 			{
-				questionList.get(sel).saveToXML(path + (String)model.getElementAt(sel) + ".xml");
+				try {
+					questionList.get(sel).saveToXML(path + (String)model.getElementAt(sel) + ".xml");
+				} catch (XmlSaveException e1) {
+					e1.printStackTrace();
+				}
 			}
 		}
 		else if(source == exitEditorItem)
