@@ -56,4 +56,12 @@ public class AnswerAddPanel extends JPanel{
 	{
 		addChoice.addActionListener(listener);
 	}
+
+	public JCheckBox getShuffleBox() {
+		return shuffleBox;
+	}
+
+	public void setShuffleBox(JCheckBox shuffleBox) {
+		this.shuffleBox = shuffleBox;
+	}
 }

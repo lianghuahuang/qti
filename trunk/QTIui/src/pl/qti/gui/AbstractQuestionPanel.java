@@ -50,6 +50,8 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	private JTextField lowerBoundText;
 	private JTextField upperBoundText;
 	private JTextField defaultValueText;
+	
+	private String questionName;
 
 	/**
 	 * This is the default constructor
@@ -86,6 +88,8 @@ public abstract class AbstractQuestionPanel extends JPanel{
 		NPanel.add(new JLabel("                "), BorderLayout.EAST);
 		NPanel.add(new JLabel("                "), BorderLayout.WEST);
 		NPanel.add(getNameVauesPanel(), BorderLayout.SOUTH);
+		
+		questionName = getQuestionType();
 		
 		this.setLayout(new BorderLayout());
 		this.setSize(705, 500);
@@ -155,8 +159,9 @@ public abstract class AbstractQuestionPanel extends JPanel{
 			{
 				public void actionPerformed(ActionEvent e) 
 				{
+					questionName = newNameTextField.getText();
 				    model = (DefaultListModel)editor.getQuestionsList().getModel();
-					model.setElementAt(newNameTextField.getText(), editor.getCurrentSelected());
+					model.setElementAt(questionName, editor.getCurrentSelected());
 				 }	
 			});
 		}
@@ -202,10 +207,13 @@ public abstract class AbstractQuestionPanel extends JPanel{
 			defaultValueLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
 			upperBoundText = new JTextField();
 			upperBoundText.setPreferredSize(new Dimension(60, 20));
+			upperBoundText.setText("0");
 			lowerBoundText = new JTextField();
 			lowerBoundText.setPreferredSize(new Dimension(60, 20));
+			lowerBoundText.setText("0");
 			defaultValueText = new JTextField();
 			defaultValueText.setPreferredSize(new Dimension(60, 20));
+			defaultValueText.setText("0");
 			ValuesPanel.setLayout(flowLayout);
 			ValuesPanel.setSize(new Dimension(710, 44));
 			ValuesPanel.add(lowerBoundLabel, null);
@@ -241,6 +249,12 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	public abstract int getQuestionNumber();
 	public abstract void addAnswers(ArrayList<AnswerPanel> answers);
 
+	
+	public String getQuestionName()
+	{
+		return questionName;
+	}
+	
 	public void setTitle(String title) {
 	    model = (DefaultListModel)editor.getQuestionsList().getModel();
 		model.addElement(title);
@@ -248,6 +262,10 @@ public abstract class AbstractQuestionPanel extends JPanel{
 
 	public void setText(String text) {
 		jTextArea.setText(text);
+	}
+	
+	public String getQuestionText() {
+		return jTextArea.getText();
 	}
 	
 	public void upperDisable()
