@@ -95,7 +95,6 @@ public abstract class AbstractQuestionPanel extends JPanel{
 		this.setSize(705, 500);
 		this.add(NPanel, BorderLayout.NORTH);
 		this.setBackground(new Color(221, 236, 251));
-		setValuesPanel();
 	}
 
 	/**
@@ -222,7 +221,7 @@ public abstract class AbstractQuestionPanel extends JPanel{
 			ValuesPanel.add(upperBoundText, null);
 			ValuesPanel.add(defaultValueLabel, null);
 			ValuesPanel.add(defaultValueText, null);
-			ValuesPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(SystemColor.inactiveCaption, 1), "Values", TitledBorder.CENTER, TitledBorder.TOP, new Font("Tahoma", Font.BOLD, 11), new Color(0, 70, 213)));
+			ValuesPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(SystemColor.inactiveCaption, 1), "Score Values", TitledBorder.CENTER, TitledBorder.TOP, new Font("Tahoma", Font.BOLD, 11), new Color(0, 70, 213)));
 		}
 		return ValuesPanel;
 	}
@@ -278,6 +277,18 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	{
 		lowerBoundText.setEnabled(false);
 		lowerBoundLabel.setEnabled(false);
+	}
+	
+	public void upperEnable()
+	{
+		upperBoundText.setEnabled(true);
+		upperBoundLabel.setEnabled(true);
+	}
+	
+	public void lowerEnable()
+	{
+		lowerBoundText.setEnabled(true);
+		lowerBoundLabel.setEnabled(true);
 	}
 	
 	public void defaultDisable()

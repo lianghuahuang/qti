@@ -7,6 +7,9 @@ public class YesNoChoiceQuestion extends SimpleChoiceQuestion {
 	
 	public YesNoChoiceQuestion(QTIEditor editor) {
 		super(editor);
+		lowerDisable();
+		upperDisable();
+		defaultDisable();
 	}
 	
 	@Override
