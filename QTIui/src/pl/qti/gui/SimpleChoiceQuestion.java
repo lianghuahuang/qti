@@ -127,8 +127,9 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 	}
 	@Override
 	public void saveToXML(String path) throws XmlSaveException {
-		// dodac przekazywanie tresci pytania, filename i czy jest shuffle
-			SingleChoiceFactory.saveQuestion(choiceList, getQuestionName(), getQuestionText(), path, ((getShuffleValue() == true) ? "true" : "false"));
+		// dodac przekazywanie tresci pytania, filename i czy jest shuffl
+			SingleChoiceFactory.saveQuestion(choiceList, getQuestionName(), getQuestionText(), path, 
+					((getShuffleValue() == true) ? "true" : "false"), getDefaultValue());
 	}
 
 	@Override
