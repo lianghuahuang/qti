@@ -240,7 +240,7 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	
 
 	// ABSTRACT METHODS - need to implement in subclasses
-	public abstract void saveToXML();
+	public abstract void saveToXML(String path);
 	public abstract String getQuestionType();
 	public abstract ArrayList<AnswerPanel> getAnswers();
 	public abstract boolean delEnable();

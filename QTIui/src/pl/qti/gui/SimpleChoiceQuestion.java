@@ -123,10 +123,10 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 		return answerCount;
 	}
 	@Override
-	public void saveToXML() {
+	public void saveToXML(String path) {
 		// dodac przekazywanie tresci pytania, filename i czy jest shuffle
 		try {
-			SingleChoiceFactory.saveQuestion(choiceList, getQuestionName(), getQuestionText(), "c:\buc.xml", ((getShuffleValue() == true) ? "true" : "false"));
+			SingleChoiceFactory.saveQuestion(choiceList, getQuestionName(), getQuestionText(), path, ((getShuffleValue() == true) ? "true" : "false"));
 		} catch (XmlSaveException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

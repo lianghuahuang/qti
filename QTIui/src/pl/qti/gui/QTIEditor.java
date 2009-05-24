@@ -385,7 +385,8 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		 saveToXML.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent e)
 		      {
-		    	  saveFile(true);
+		    	  String fileName = saveFile(true);
+		    	  questionList.get(currentSelected).saveToXML(fileName);
 		      }
 		      });
 	}
@@ -517,6 +518,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 				      System.out.println("Cancel SAVE");
 				    } else if (response == JOptionPane.YES_OPTION) {
 				    	saveFile(false);
+				    	questionList.get(0).saveToXML(null);
 				    } else if (response == JOptionPane.CLOSED_OPTION) {
 				      System.out.println("JOptionPane closed");
 				    }
@@ -528,7 +530,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 			for(int sel : questionsList.getSelectedIndices())
 			{
 				System.out.println(sel);
-				questionList.get(sel).saveToXML();
+				questionList.get(sel).saveToXML(null);
 			}
 		}
 		else if(source == exitEditorItem)
@@ -599,7 +601,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		if (returnVal == JFileChooser.APPROVE_OPTION) 
 		{
 			File file = fc.getSelectedFile();
-			if(!isFileName)
+			if(isFileName)
 				return file.getAbsolutePath();
 			
 			int length = file.getAbsolutePath().length();

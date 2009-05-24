@@ -296,7 +296,7 @@ public class BlankQuestion extends AbstractQuestionPanel implements ActionListen
 	public void removeAnswerAt(int index) {
 	}
 	@Override
-	public void saveToXML() {
+	public void saveToXML(String path) {
 		// TODO Auto-generated method stub
 	}
 

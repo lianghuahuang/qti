@@ -42,7 +42,7 @@ public class OpenQuestion extends AbstractQuestionPanel{
 	}
 
 	@Override
-	public void saveToXML() {
+	public void saveToXML(String path) {
 		try {
 			TextQuestionFactory.saveQuestion("test", "aaa", "C:\\buc.xml");
 		} catch (XmlSaveException e) {
