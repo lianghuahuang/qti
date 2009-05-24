@@ -42,13 +42,8 @@ public class OpenQuestion extends AbstractQuestionPanel{
 	}
 
 	@Override
-	public void saveToXML(String path) {
-		try {
+	public void saveToXML(String path) throws XmlSaveException {
 			TextQuestionFactory.saveQuestion(getQuestionName(), getQuestionText(), path);
-		} catch (XmlSaveException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	@Override

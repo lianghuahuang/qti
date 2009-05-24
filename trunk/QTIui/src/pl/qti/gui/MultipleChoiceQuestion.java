@@ -19,14 +19,9 @@ public class MultipleChoiceQuestion extends SimpleChoiceQuestion {
 		return "Multiple Question";
 	}
 	
-	public void saveToXML(String path)
+	public void saveToXML(String path) throws XmlSaveException
 	{
 		//ostatni parametr to list z lowerBound, upperBound, defaultValue dokladnie w takiej kolejnosci jak podalem
-		try {
 			MultipleChoiceFactory.saveQuestion(getAnswers(), getQuestionName(), getQuestionText(), path, ((getShuffleValue() == true) ? "true" : "false"), getScoreValues());
-		} catch (XmlSaveException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }

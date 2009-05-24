@@ -26,6 +26,8 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
+import pl.qti.editor.exceptions.XmlSaveException;
+
 public class BlankQuestion extends AbstractQuestionPanel implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
@@ -296,7 +298,7 @@ public class BlankQuestion extends AbstractQuestionPanel implements ActionListen
 	public void removeAnswerAt(int index) {
 	}
 	@Override
-	public void saveToXML(String path) {
+	public void saveToXML(String path) throws XmlSaveException {
 		// TODO Auto-generated method stub
 	}
 

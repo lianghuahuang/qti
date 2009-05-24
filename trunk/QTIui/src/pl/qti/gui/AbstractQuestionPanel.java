@@ -23,6 +23,8 @@ import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.border.TitledBorder;
 
+import pl.qti.editor.exceptions.XmlSaveException;
+
 import java.awt.ComponentOrientation;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -239,7 +241,7 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	
 
 	// ABSTRACT METHODS - need to implement in subclasses
-	public abstract void saveToXML(String path);
+	public abstract void saveToXML(String path) throws XmlSaveException;
 	public abstract String getQuestionType();
 	public abstract ArrayList<AnswerPanel> getAnswers();
 	public abstract boolean delEnable();

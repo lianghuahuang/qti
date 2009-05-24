@@ -126,14 +126,9 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 		return answerCount;
 	}
 	@Override
-	public void saveToXML(String path) {
+	public void saveToXML(String path) throws XmlSaveException {
 		// dodac przekazywanie tresci pytania, filename i czy jest shuffle
-		try {
 			SingleChoiceFactory.saveQuestion(choiceList, getQuestionName(), getQuestionText(), path, ((getShuffleValue() == true) ? "true" : "false"));
-		} catch (XmlSaveException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Override

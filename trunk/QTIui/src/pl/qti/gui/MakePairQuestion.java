@@ -25,6 +25,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import pl.qti.editor.exceptions.XmlSaveException;
+
 
 public class MakePairQuestion extends AbstractQuestionPanel implements ActionListener, TableModelListener{
 
@@ -314,7 +316,7 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 	public void removeAnswerAt(int index) {
 	}
 	@Override
-	public void saveToXML(String path) {
+	public void saveToXML(String path) throws XmlSaveException {
 	}
 
 	@Override
