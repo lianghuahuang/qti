@@ -11,6 +11,8 @@ public class MultipleChoiceQuestion extends SimpleChoiceQuestion {
 	
 	public MultipleChoiceQuestion(QTIEditor editor) {
 		super(editor);
+		upperEnable();
+		lowerEnable();
 	}
 	@Override
 	public String getQuestionType() {

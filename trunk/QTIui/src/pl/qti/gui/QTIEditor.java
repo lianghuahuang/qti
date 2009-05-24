@@ -388,7 +388,11 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		      public void actionPerformed(ActionEvent e)
 		      {
 		    	  String fileName = saveFile(true);
-		    	  questionList.get(currentSelected).saveToXML(fileName);
+		    	  
+		    	  if(!fileName.contains(".xml"))
+		    		  questionList.get(currentSelected).saveToXML(fileName + ".xml");
+		    	  else
+		    		  questionList.get(currentSelected).saveToXML(fileName);
 		      }
 		      });
 	}

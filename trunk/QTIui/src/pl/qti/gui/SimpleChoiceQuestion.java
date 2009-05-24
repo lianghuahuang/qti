@@ -36,6 +36,9 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 	public SimpleChoiceQuestion(QTIEditor editor) {
 		super(editor);
 		initialize();
+		setValuesPanel();
+	    upperDisable();
+	    lowerDisable();
 	}
 	/**
 	 * This method initializes this
