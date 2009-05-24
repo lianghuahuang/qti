@@ -147,6 +147,7 @@ public class MultipleChoiceFactory extends AbstractQuestionFactory {
 			i++;
 		}
 		response.appendChild(correctResponse);
+		response.appendChild(mapping);
 		
 		Element outcome = SaveQuestionUtility.createOutcome(doc, "single", "integer");
 		
