@@ -509,7 +509,6 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		}
 		else if(source == openItem)
 		{
-			//createJFileChooser();
 			try {
 				openFiles();
 			} catch (InvalidXmlException e1) {
