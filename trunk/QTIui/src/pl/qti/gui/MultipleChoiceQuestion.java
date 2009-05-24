@@ -21,13 +21,9 @@ public class MultipleChoiceQuestion extends SimpleChoiceQuestion {
 	
 	public void saveToXML(String path)
 	{
-		ArrayList<String> odp = new ArrayList<String>();
-		odp.add("1");
-		odp.add("1");
-		odp.add("1");
 		//ostatni parametr to list z lowerBound, upperBound, defaultValue dokladnie w takiej kolejnosci jak podalem
 		try {
-			MultipleChoiceFactory.saveQuestion(getAnswers(), getQuestionName(), getQuestionText(), path, ((getShuffleValue() == true) ? "true" : "false"), odp);
+			MultipleChoiceFactory.saveQuestion(getAnswers(), getQuestionName(), getQuestionText(), path, ((getShuffleValue() == true) ? "true" : "false"), getScoreValues());
 		} catch (XmlSaveException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
