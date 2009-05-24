@@ -27,6 +27,7 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 	private int position = 5;
 	private final int height = 48;
 	private static final int MAX_QUESTIONS = 10;
+	private AnswerAddPanel ap = null;
 	
 	/**
 	 * This method initializes 
@@ -52,13 +53,9 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 	private JScrollPane getJScrollPane() {
 		if (jScrollPane == null) {
 			jScrollPane = new JScrollPane();
-			//jScrollPane.setSize(new Dimension(810, 153));
 			jScrollPane.setViewportView(getJPanel());
-			//jScrollPane.scrollRectToVisible(new Rectangle(0, jScrollPane.getHeight()-2, 10, 10));
-			//jPanel.setPreferredSize(jScrollPane.getViewport().getExtentSize()); 
 			jScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 			jScrollPane.setLocation(0, 80);
-			//jScrollPane.getVerticalScrollBar().setBlockIncrement(30);
 		}
 		return jScrollPane;
 	}
@@ -90,7 +87,7 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 			mainPanel = new JPanel();
 			mainPanel.setBackground(new Color(221, 236, 251));
 			mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-			AnswerAddPanel ap = new AnswerAddPanel();
+			ap = new AnswerAddPanel();
 			ap.setListener(this);
 			mainPanel.add(ap);
 			mainPanel.add(new AnswerDescriptionInfo());
@@ -99,6 +96,16 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 		return mainPanel;
 	}
 
+	public boolean getShuffleValue()
+	{
+		return ap.getShuffleBox().isSelected();
+	}
+	
+	public void setShuffleValue(boolean selected)
+	{
+		ap.getShuffleBox().setSelected(selected);
+	}
+	
 	@Override
 	public String getQuestionType() {
 		return "Simple Choice";
@@ -119,7 +126,7 @@ public class SimpleChoiceQuestion extends AbstractQuestionPanel implements Actio
 	public void saveToXML() {
 		// dodac przekazywanie tresci pytania, filename i czy jest shuffle
 		try {
-			SingleChoiceFactory.saveQuestion(choiceList, getName(), "pytanie", "c:\buc.xml", "false");
+			SingleChoiceFactory.saveQuestion(choiceList, getQuestionName(), getQuestionText(), "c:\buc.xml", ((getShuffleValue() == true) ? "true" : "false"));
 		} catch (XmlSaveException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

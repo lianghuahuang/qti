@@ -90,8 +90,8 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	private JLabel number;
 	private JButton delButton;
 	private JComboBox typeComboBox;
+	private JButton exampleButton;
 	private JButton addButton;
-	private JButton add2jButton;
 	private JLabel numberLabel = null;
 	private JComboBox numberComboBox = null;
 	private JFileChooser fc;
@@ -124,6 +124,8 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	public QTIEditor() {
 		super();
 		initialize();
+		// init JFileChooser in separated thread
+		new Thread(){public void run() { createJFileChooser(); } }.start();
 	}
 
 	/**
@@ -135,8 +137,8 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		this.setSize(970, 700);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icons/icon.png")));
 		this.setPreferredSize(new Dimension(671, 457));
-		this.setMinimumSize(new Dimension(980, 900));
-		this.setResizable(true);
+		this.setMinimumSize(new Dimension(980, 500));
+		//this.setResizable(true);
 		this.setJMenuBar(getJJMenuBar());
 		this.setContentPane(getJContentPane());
 		this.setTitle("QTI Editor");
@@ -383,7 +385,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		 saveToXML.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent e)
 		      {
-		    	  System.out.println("SAVE TO XML"); 
+		    	  saveFile(true);
 		      }
 		      });
 	}
@@ -445,7 +447,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		{
 			deleteQuestion();
 		}
-		else if(source == add2jButton)
+		else if(source == addButton)
 		{
 			// use reflection API to create concrete class
 			insertedQestion = ClassLoader.createQuestion(ComboBoxValues.QUESTION_ALIASES.get(questionType), this);
@@ -482,32 +484,51 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 				answersNumber = 1;
 			}
 		}
-		else if(source == addButton)
+		else if(source == exampleButton)
 		{
-			questionExample = new QuestionExampleDialog(this, "Question example");
+			questionExample = new QuestionExampleDialog(this, (String)typeComboBox.getSelectedItem());
 			questionExample.setLocationRelativeTo(this);
 			questionExample.setVisible(true);
-			questionExample.setSize(new Dimension(640, 405));
+			//questionExample.setSize(new Dimension(640, 405));
+			questionExample.setResizable(false); 
 		}
 		else if(source == openItem)
 		{
-			createJFileChooser();
+			//createJFileChooser();
 			try {
 				openFiles();
 			} catch (InvalidXmlException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
+		// zapisz wszystkie pytania
 		else if(source == saveItem)
 		{
-			saveFile();
+			if(questionList.size() == 0)
+			{
+				JOptionPane.showMessageDialog(null, "Brak pytan do zapisu !", "Ostrzezenie", JOptionPane.INFORMATION_MESSAGE); 
+			}
+			else
+			{
+				int response = JOptionPane.showConfirmDialog(null, "Wszystkie pytania zostana zapisane pod wskazanymi tytulami.Czy chcesz kontynuowac?", "Confirm",
+				        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (response == JOptionPane.NO_OPTION) 
+				{
+				      System.out.println("Cancel SAVE");
+				    } else if (response == JOptionPane.YES_OPTION) {
+				    	saveFile(false);
+				    } else if (response == JOptionPane.CLOSED_OPTION) {
+				      System.out.println("JOptionPane closed");
+				    }
+			}
 		}
+		// zapisz wybrane pytania
 		else if(source == saveSelectedItem)
 		{
 			for(int sel : questionsList.getSelectedIndices())
 			{
 				System.out.println(sel);
+				questionList.get(sel).saveToXML();
 			}
 		}
 		else if(source == exitEditorItem)
@@ -565,11 +586,32 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 			} catch (ParseException e) {
 				e.printStackTrace();
 			} catch (InvalidXmlException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	}
-	private void saveFile() {
+	private String saveFile(boolean isFileName) {
+		
+		String filename = "";
+		if(!isFileName)
+		 fc.setSelectedFile(new File("Choose only a directory"));
+		
+		int returnVal = fc.showSaveDialog(QTIEditor.this);
+		if (returnVal == JFileChooser.APPROVE_OPTION) 
+		{
+			File file = fc.getSelectedFile();
+			if(!isFileName)
+				return file.getAbsolutePath();
+			
+			int length = file.getAbsolutePath().length();
+			int nameLength = file.getName().length();
+			
+		    filename = file.getAbsolutePath().substring(0, length - nameLength);
+		}
+		else
+		{
+			filename = null;
+		}
+		return filename;
 	}
 	
 
@@ -670,14 +712,14 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getAddButton() {
-		if (addButton == null) {
-			addButton = new JButton();
-			addButton.setIcon(new ImageIcon(getClass().getResource("/icons/act_info.gif")));
-			addButton.setText("INFO");
-			addButton.setHorizontalTextPosition(SwingConstants.TRAILING);
-			addButton.addActionListener(this);
+		if (exampleButton == null) {
+			exampleButton = new JButton();
+			exampleButton.setIcon(new ImageIcon(getClass().getResource("/icons/act_info.gif")));
+			exampleButton.setText("INFO");
+			exampleButton.setHorizontalTextPosition(SwingConstants.TRAILING);
+			exampleButton.addActionListener(this);
 		}
-		return addButton;
+		return exampleButton;
 	}
 
 	/**
@@ -686,13 +728,13 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getAdd2jButton() {
-		if (add2jButton == null) {
-			add2jButton = new JButton();
-			add2jButton.setIcon(new ImageIcon(getClass().getResource("/icons/add2.gif")));
-			add2jButton.setText("ADD");
-			add2jButton.addActionListener(this);
+		if (addButton == null) {
+			addButton = new JButton();
+			addButton.setIcon(new ImageIcon(getClass().getResource("/icons/add2.gif")));
+			addButton.setText("ADD");
+			addButton.addActionListener(this);
 		}
-		return add2jButton;
+		return addButton;
 	}
 	
 	/**
