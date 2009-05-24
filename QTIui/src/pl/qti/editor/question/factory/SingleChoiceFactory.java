@@ -51,6 +51,21 @@ public class SingleChoiceFactory extends AbstractQuestionFactory {
 		}
 		
 		// is shuffle?
+		Node attr = questionXml.getElementsByTagName("choiceInteraction").item(0).getAttributes().getNamedItem("shuffle");
+		Boolean isShuffle = false;
+		if(attr!=null)
+		{
+			if(attr.getTextContent().equalsIgnoreCase("true"))
+				isShuffle = true;
+		}
+		this.questionPanel.setShuffleValue(isShuffle);
+		
+		Node def = questionXml.getElementsByTagName("defaultValue").item(0);
+		for(int i=0;i<def.getChildNodes().getLength();i++)
+		{
+			if(def.getChildNodes().item(i).getNodeName().equals("value"))
+				this.questionPanel.setDefaultValue(def.getChildNodes().item(i).getTextContent());
+		}
 		
 		
 		if(value==null)
@@ -79,7 +94,8 @@ public class SingleChoiceFactory extends AbstractQuestionFactory {
 		return panel;			
 	}
 	
-	public static void saveQuestion(ArrayList<AnswerPanel> answers, String title, String question, String filename, String isShuffle) throws XmlSaveException
+	public static void saveQuestion(ArrayList<AnswerPanel> answers, String title, String question, String filename, 
+			String isShuffle, String defaultValue) throws XmlSaveException
 	{
 		SaveQuestionUtility.init();
 		Document doc = SaveQuestionUtility.getDoc();
@@ -109,7 +125,7 @@ public class SingleChoiceFactory extends AbstractQuestionFactory {
 		Element outcome = SaveQuestionUtility.createOutcome(doc, "single", "integer");
 		Element defaultV = doc.createElement(SaveQuestionUtility.DEFAULTV);
 		Element val2 = doc.createElement(SaveQuestionUtility.VALUE);
-		val2.setTextContent("0");
+		val2.setTextContent(defaultValue);
 		defaultV.appendChild(val2);
 		outcome.appendChild(defaultV);
 		
@@ -127,15 +143,18 @@ public class SingleChoiceFactory extends AbstractQuestionFactory {
 		{
 			Element simpleChoice = doc.createElement("simpleChoice");
 			simpleChoice.setAttribute(SaveQuestionUtility.IDENTIFIER, i+"");
+			simpleChoice.setTextContent(a.getText().trim());
 			if(a.getFeedback().trim().length()>0)
 			{
+				System.out.println("Dodaje feedback "+a.getFeedback().trim());
 				Element feedback = doc.createElement(SaveQuestionUtility.FEEDBACK);
 				feedback.setTextContent(a.getFeedback().trim());
+				feedback.setAttribute(SaveQuestionUtility.IDENTIFIER, i+"");
 				simpleChoice.appendChild(feedback);
 			}
 			//TODO fixed?
-			simpleChoice.setTextContent(a.getText().trim());
 			extended.appendChild(simpleChoice);
+			i++;
 		}
 		itemBody.appendChild(extended);
 		
