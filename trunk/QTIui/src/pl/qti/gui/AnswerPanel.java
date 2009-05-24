@@ -31,9 +31,8 @@ public class AnswerPanel extends JPanel implements ActionListener{
 	private JButton feedbackButton = null;
 	private JButton deleteButton = null;
 	private AbstractQuestionPanel  parent;
-	private String feedback;  //  @jve:decl-index=0:
+	private String feedback = "";  //  @jve:decl-index=0:
 	private FeedbackPanel f = null;  
-	private static int currentSelected = -1;
 	private int x, y;
 	/**
 	 * This is the default constructor

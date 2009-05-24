@@ -120,6 +120,11 @@ public class FeedbackPanel extends JDialog implements ActionListener{
 	
 	public String getFeedback()
 	{
+		
+		if(feedbackTextArea == null)
+		{
+			return " ";
+		}
 		return feedbackTextArea.getText();
 	}
 
