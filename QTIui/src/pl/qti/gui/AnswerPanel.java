@@ -34,6 +34,7 @@ public class AnswerPanel extends JPanel implements ActionListener{
 	private String feedback = "";  //  @jve:decl-index=0:
 	private FeedbackPanel f = null;  
 	private int x, y;
+	private boolean enable;
 	/**
 	 * This is the default constructor
 	 */
@@ -49,11 +50,12 @@ public class AnswerPanel extends JPanel implements ActionListener{
 	/**
 	 * This is the set position constructor
 	 */
-	public AnswerPanel(int x, int y, AbstractQuestionPanel parent) {
+	public AnswerPanel(int x, int y, AbstractQuestionPanel parent, boolean enable) {
 		super();
 		this.parent = parent;
 		this.x = x;
 		this.y = y;
+		this.enable = enable;
 		initialize(x, y);
 	}
 
@@ -145,6 +147,7 @@ public class AnswerPanel extends JPanel implements ActionListener{
 		if (ScoreTextField == null) {
 			ScoreTextField = new JTextField();
 			ScoreTextField.setPreferredSize(new Dimension(40, 25));
+			ScoreTextField.setEnabled(enable);
 		}
 		return ScoreTextField;
 	}
