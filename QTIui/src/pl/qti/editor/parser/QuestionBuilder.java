@@ -53,7 +53,6 @@ public class QuestionBuilder {
 	        Node attrType = attributes.getNamedItem(recAttrType);
 	        
 	        AbstractQuestionFactory questionFactory = null;
-	        
 	        switch(getValues().get(attrCard.getNodeValue()+"."+attrType.getNodeValue()))
 	        {
 	        	case 0:
@@ -78,6 +77,7 @@ public class QuestionBuilder {
 	        		break;
 	        	case 5:
 	        		questionFactory = new PairQuestionFactory();
+	        		break;
 	        	default:
 	        		throw new ParseException("Provided file does not contain proper QTI question!", 0);
 	        		

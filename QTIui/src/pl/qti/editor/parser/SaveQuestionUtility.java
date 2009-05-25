@@ -43,6 +43,7 @@ public class SaveQuestionUtility {
 	public static String DEFAULTV = "defaultValue";
 	public static String FEEDBACK = "feedbackInline";
 	public static String RESPONSE_PROC = "responseProcessing";
+	public static String MAPPING = "mapping";
 	
 	public SaveQuestionUtility() throws XmlSaveException
 	{
