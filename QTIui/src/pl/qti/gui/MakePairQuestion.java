@@ -26,6 +26,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import pl.qti.editor.exceptions.XmlSaveException;
+import pl.qti.editor.question.factory.PairQuestionFactory;
 import pl.qti.editor.questions.MakePairAnswer;
 import pl.qti.editor.questions.SimpleAnswer;
 
@@ -318,6 +319,9 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 	}
 	@Override
 	public void saveToXML(String path) throws XmlSaveException {
+		AssociateAnswer aa = getAnswersClass();
+		PairQuestionFactory.saveQuestion(aa.getAnswerList(), aa.getPairList(), getQuestionName(), 
+				getQuestionText(), getDefaultValue(), path);
 	}
 
 	@Override
