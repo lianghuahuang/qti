@@ -12,7 +12,11 @@ public class MakePairAnswer {
 	 LHS = lhs; 
 	 RHS = rhs; 
 	} 
-
+	
+	public MakePairAnswer() { 
+		
+	}
+	
 	public MakePairAnswer(String lhs, String rhs, double score, boolean correct) { 
 	 super(); 
 	 LHS = lhs; 
