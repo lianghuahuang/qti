@@ -312,7 +312,7 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 	}
 	@Override
 	public void saveToXML(String path) throws XmlSaveException {
-		OrderedChoiceFactory.saveQuestion(getAnswersClass(), getQuestionName(), getQuestionName(), "false", path);
+		OrderedChoiceFactory.saveQuestion(getAnswersClass(), getQuestionName(), getQuestionText(), "false", path);
 	}
 	@Override
 	public void addAnswers(ArrayList<AnswerPanel> answers) {
