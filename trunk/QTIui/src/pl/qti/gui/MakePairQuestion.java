@@ -403,9 +403,10 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
         @SuppressWarnings("unchecked")
 		public void setValueAt(Object value, int row, int col) {
         	
+        	String new_value="";
         	if(col != 2 && col != 0)
         	{
-        		String new_value = (String)value;
+        		new_value = (String)value;
 	        	tempValue = (String)dataVector.get(row).get(col);
 	        	if(!(tempValue.trim().equals("")))
 	        	{
@@ -434,6 +435,28 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 	        	}
 	        	
         	}
+        	if(!(tempValue.trim().equals("")) && (!new_value.equals(tempValue)))
+        	{
+	        	for(int i = 0; i <pairTableModel.getRowCount(); i++)
+	        	{
+	        		System.out.println("iteracja");
+	        		System.out.println("1: "+pairTableModel.getValueAt(i, 0));
+	        		System.out.println("2: "+pairTableModel.getValueAt(i, 1));
+	        		
+	        		if(((String)pairTableModel.getValueAt(i, 0)).equals(tempValue))
+	        		{
+	        			pairTableModel.setValueAt(new_value, i, 0);
+	        			System.out.println("1: "+pairTableModel.getValueAt(i, 0));
+	        		}
+	        			
+	        		if(((String)pairTableModel.getValueAt(i, 1)).equals(tempValue))
+	        		{
+	        			pairTableModel.setValueAt(new_value, i, 1);
+	        			System.out.println("2: "+pairTableModel.getValueAt(i, 0));
+	        		}
+	        	}
+        	}
+        	
         	boxEditor = new MyComboBoxEditor(answers);
         	pairTable.getColumnModel().getColumn(0).setCellEditor(boxEditor);
         	pairTable.getColumnModel().getColumn(1).setCellEditor(boxEditor);
@@ -626,11 +649,9 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 			pair = new MakePairAnswer();
 			pair.setLHS((String)pairTableModel.getValueAt(i, 0));
 			pair.setRHS((String)pairTableModel.getValueAt(i, 1));
-			pair.setScore((Double)pairTableModel.getValueAt(i, 3));
+			pair.setScore((Double)pairTableModel.getValueAt(i, 2));
 			pairList.add(pair);
 		}
 		return new AssociateAnswer(answerList, pairList);
 	}
-
-
 }
