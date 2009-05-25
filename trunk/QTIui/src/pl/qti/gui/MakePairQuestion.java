@@ -352,7 +352,6 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 		}
 		else if(e.getSource() == pairAddButton)
 		{
-			System.out.println(pairTableModel.pairDataVector.size());
 			if(answers.size() != 0)
 			  pairTableModel.insertRow(pairTable.getRowCount(),new Object[]  {"", "", 0.0});
 		}
@@ -545,7 +544,6 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 
 		public void removeRow(int row)
 		  {
-			System.out.println("USUWAM: " +  row);
 		    pairDataVector.remove(row);
 		    fireTableRowsDeleted(row, row);
 		  }
@@ -590,7 +588,6 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 	public void setAnswers(ArrayList<SimpleAnswer> answerList, ArrayList<MakePairAnswer> pairList)
 	{
 		int row = 0;
-		ArrayList<String> answers = new ArrayList<String>();
 		for(SimpleAnswer answer : answerList)
 		{
 			answersTableModel.insertRow(row, new Object[]  {row + 1, answer.getValue(), answer.isFixed() });
@@ -598,15 +595,15 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 			row++;
 		}
 		count = row;
-		row = 0;
+		int row2 = 0;
 		for(MakePairAnswer pair : pairList)
 		{
-			pairTableModel.insertRow(row, new Object[]  {pair.getLHS(), pair.getRHS(), pair.getScore() });
-			row++;
-			boxEditor = new MyComboBoxEditor(answers);
-        	pairTable.getColumnModel().getColumn(0).setCellEditor(boxEditor);
-        	pairTable.getColumnModel().getColumn(1).setCellEditor(boxEditor);
+			pairTableModel.insertRow(row2, new Object[]  {pair.getLHS(), pair.getRHS(), pair.getScore()});
+        	row2++;
 		}
+		boxEditor = new MyComboBoxEditor(answers);
+		pairTable.getColumnModel().getColumn(0).setCellEditor(boxEditor);
+		pairTable.getColumnModel().getColumn(1).setCellEditor(boxEditor);
 	}
 	
 	public AssociateAnswer getAnswersClass()
