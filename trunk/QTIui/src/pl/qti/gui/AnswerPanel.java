@@ -217,7 +217,9 @@ public class AnswerPanel extends JPanel implements ActionListener{
 				int answer = JOptionPane.showConfirmDialog ( this, "Do you really want to delete this answer?" );
 				if ( answer == JOptionPane.YES_OPTION )
 				   {
-						System.out.println("USUWAM " + nrLabel.getText());
+					  if(!(parent.getQuestionNumber() > 2))
+						  JOptionPane.showMessageDialog(this, "There must be at least 2 answers", "WARNING", JOptionPane.INFORMATION_MESSAGE);
+				      else
 						parent.removeAnswerAt(new Integer(nrLabel.getText()));
 				   }
 		     }
