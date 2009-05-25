@@ -492,7 +492,6 @@ public class OrderQuestion extends AbstractQuestionPanel implements ActionListen
 		for(Integer order : orderInserted)
 		{
 			listModel.addElement(list.get(order).getValue());
-			System.out.println(order);
 		}
 		count = row;
 	}
