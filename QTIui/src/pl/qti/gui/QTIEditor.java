@@ -480,7 +480,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		}
 		else if(source == numberComboBox)
 		{
-			answersNumber = numberComboBox.getSelectedIndex() + 1;
+			answersNumber = numberComboBox.getSelectedIndex() + 2;
 		}
 		else if(source == typeComboBox)
 		{
@@ -488,7 +488,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 			questionType = (String)typeComboBox.getSelectedItem();
 			if(questionType.equals("Yes No Question"))
 			{
-				numberComboBox.setSelectedIndex(1);
+				numberComboBox.setSelectedIndex(0);
 				numberComboBox.setEnabled(false);
 				answersNumber = 2;
 			}
@@ -774,7 +774,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 			numberComboBox = new JComboBox(ComboBoxValues.ANSWERS_NUMBER);
 			numberComboBox.setFont(new Font("Dialog", Font.PLAIN, 12));
 			numberComboBox.setMaximumRowCount(5);
-			numberComboBox.setSelectedIndex(3);
+			numberComboBox.setSelectedIndex(2);
 			numberComboBox.setPreferredSize(new Dimension(27, 20));
 			numberComboBox.addActionListener(this);
 		}

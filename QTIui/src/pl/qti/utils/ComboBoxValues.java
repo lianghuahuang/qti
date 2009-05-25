@@ -20,7 +20,7 @@ public class ComboBoxValues {
 			add("Make Pair Question");
 		}
 	};
-	public static final String[] ANSWERS_NUMBER = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }; 
+	public static final String[] ANSWERS_NUMBER = {"2", "3", "4", "5", "6", "7", "8", "9", "10" }; 
 	public static final String[] YN_ANSWERS_NUMBER = {"2"};
 	public static final Map<String, String> QUESTION_ALIASES =  new HashMap<String, String>()   
 	        {  
