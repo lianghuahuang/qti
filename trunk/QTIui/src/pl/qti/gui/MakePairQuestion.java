@@ -590,22 +590,50 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 	public void setAnswers(ArrayList<SimpleAnswer> answerList, ArrayList<MakePairAnswer> pairList)
 	{
 		int row = 0;
+		ArrayList<String> answers = new ArrayList<String>();
 		for(SimpleAnswer answer : answerList)
 		{
-			answersTableModel.insertRow(row, new Object[]  {row + 1,answer.getValue(), answer.isFixed() });
+			answersTableModel.insertRow(row, new Object[]  {row + 1, answer.getValue(), answer.isFixed() });
+			answers.add(answer.getValue());
 			row++;
 		}
-		
-		for(MakePairAnswer order : pairList)
-		{
-			//listModel.addElement(list.get(order).getValue());
-			//pairTableModel.insertRow(row, new Object[]  {row + 1,answer.getValue(), answer.isFixed() });
-			
-//			boxEditor = new MyComboBoxEditor(answers);
-//        	pairTable.getColumnModel().getColumn(0).setCellEditor(boxEditor);
-//        	pairTable.getColumnModel().getColumn(1).setCellEditor(boxEditor);
-		}
 		count = row;
+		row = 0;
+		for(MakePairAnswer pair : pairList)
+		{
+			pairTableModel.insertRow(row, new Object[]  {row + 1,pair.getLHS(), pair.getRHS(), pair.isCorrect(), pair.getScore() });
+			row++;
+			boxEditor = new MyComboBoxEditor(answers);
+        	pairTable.getColumnModel().getColumn(0).setCellEditor(boxEditor);
+        	pairTable.getColumnModel().getColumn(1).setCellEditor(boxEditor);
+		}
+	}
+	
+	public AssociateAnswer getAnswersClass()
+	{
+		ArrayList<SimpleAnswer> answerList = new ArrayList<SimpleAnswer>();
+		ArrayList<MakePairAnswer> pairList = new ArrayList<MakePairAnswer>();
+		SimpleAnswer answer;
+		MakePairAnswer pair;
+		
+		for(int i = 0; i < answersTableModel.getRowCount(); i++)
+		{
+			answer = new SimpleAnswer();
+			answer.setValue((String)answersTableModel.getValueAt(i, 1));
+			answer.setFixed((Boolean)answersTableModel.getValueAt(i, 2));
+			answerList.add(answer);
+		}
+		
+		for(int i = 0; i < answersTableModel.getRowCount(); i++)
+		{
+			pair = new MakePairAnswer();
+			pair.setLHS((String)pairTableModel.getValueAt(i, 0));
+			pair.setRHS((String)pairTableModel.getValueAt(i, 1));
+			pair.setCorrect((Boolean)pairTableModel.getValueAt(i, 2));
+			pair.setScore((Double)pairTableModel.getValueAt(i, 3));
+			pairList.add(pair);
+		}
+		return new AssociateAnswer(answerList, pairList);
 	}
 
 
