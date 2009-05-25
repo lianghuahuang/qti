@@ -422,6 +422,7 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 	        				else
 	        				{
 	        					answers.add(i, new_value);
+	        					answers.remove(tempValue);
 	        					break;
 	        				}
 	        			}
