@@ -44,6 +44,7 @@ public class SaveQuestionUtility {
 	public static String FEEDBACK = "feedbackInline";
 	public static String RESPONSE_PROC = "responseProcessing";
 	public static String MAPPING = "mapping";
+	public static String MAPENTRY = "mapEntry";
 	
 	public SaveQuestionUtility() throws XmlSaveException
 	{
