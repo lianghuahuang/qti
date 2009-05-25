@@ -128,6 +128,9 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		super();
 		initialize();
 		// init JFileChooser in separated thread
+		ProgressBar bar = new ProgressBar(this);
+		bar.setVisible(true);
+		bar.setLocationRelativeTo(this);
 		new Thread(){public void run() { createJFileChooser(); } }.start();
 	}
 
