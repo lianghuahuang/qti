@@ -69,6 +69,9 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 	{
 		super(editor);
 		super.add(getJScrollPane(), BorderLayout.CENTER);
+		setValuesPanel();
+	    upperDisable();
+	    lowerDisable();
 	}
 	
 	private JScrollPane getJScrollPane() {
