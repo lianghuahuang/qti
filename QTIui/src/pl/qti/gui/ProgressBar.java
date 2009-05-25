@@ -9,19 +9,20 @@ import javax.swing.JLabel;
 import java.awt.Rectangle;
 import javax.swing.JProgressBar;
 import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.Color;
 
 public class ProgressBar extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;  //  @jve:decl-index=0:visual-constraint="10,10"
-	private JLabel infoLabel = null;
 	private JProgressBar jProgressBar = null;
 
 	/**
 	 * @param owner
 	 */
 	public ProgressBar(Frame owner) {
-		super(owner, "Saving ...");
+		super(owner, "Saving in progress...");
 		initialize();
 	}
 
@@ -31,7 +32,7 @@ public class ProgressBar extends JDialog {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(340, 138);
+		this.setSize(371, 80);
 		this.setContentPane(getJContentPane());
 	}
 
@@ -42,14 +43,9 @@ public class ProgressBar extends JDialog {
 	 */
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
-			infoLabel = new JLabel();
-			infoLabel.setBounds(new Rectangle(109, 15, 126, 20));
-			infoLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-			infoLabel.setText("Saving question");
 			jContentPane = new JPanel();
 			jContentPane.setLayout(null);
 			jContentPane.setSize(new Dimension(266, 65));
-			jContentPane.add(infoLabel, null);
 			jContentPane.add(getJProgressBar(), null);
 		}
 		return jContentPane;
@@ -63,11 +59,15 @@ public class ProgressBar extends JDialog {
 	private JProgressBar getJProgressBar() {
 		if (jProgressBar == null) {
 			jProgressBar = new JProgressBar();
-			jProgressBar.setBounds(new Rectangle(35, 49, 258, 39));
+			jProgressBar.setBounds(new Rectangle(21, 14, 321, 25));
 			jProgressBar.setString("saving in progress...");
+			jProgressBar.setBackground(SystemColor.activeCaption);
+			jProgressBar.setForeground(Color.red);
 			jProgressBar.setStringPainted(true);
+			jProgressBar.setIndeterminate(true);
+
 		}
 		return jProgressBar;
 	}
 
-}  //  @jve:decl-index=0:visual-constraint="33,85"
+}  //  @jve:decl-index=0:visual-constraint="33,115"
