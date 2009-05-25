@@ -62,7 +62,7 @@ public class PairQuestionFactory extends AbstractQuestionFactory {
 			answersKeys.put(a.getValue(), i);
 			i++;
 		}
-		Integer[] counts = new Integer[answers.size()];
+		int[] counts = new int[answers.size()];
 		for(MakePairAnswer a: pairs)
 		{
 			counts[answersKeys.get(a.getLHS())]++;
@@ -121,7 +121,8 @@ public class PairQuestionFactory extends AbstractQuestionFactory {
 			i++;
 		}
 		
-		Element outcome = SaveQuestionUtility.createOutcome(doc, "single", "float");	
+		Element outcome = SaveQuestionUtility.createOutcome(doc, "single", "float");
+		assessmentItem.appendChild(response);
 		assessmentItem.appendChild(outcome);
 		assessmentItem.appendChild(itemBody);
 		
@@ -129,6 +130,7 @@ public class PairQuestionFactory extends AbstractQuestionFactory {
 		responseProc.setAttribute("template", "http://www.imsglobal.org/question/qti_v2p0/rptemplates/map_response");
 
 		assessmentItem.appendChild(responseProc);
+		doc.appendChild(assessmentItem);
 		SaveQuestionUtility.save(doc, filename);
 	}
 	
