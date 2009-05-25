@@ -117,6 +117,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	private JMenuItem saveSelectedItem = null;
 	private JMenuItem newQuestionItem = null;
 	private JMenuItem exitEditorItem = null;
+	private ProgressBar bar;
 	
 	private DefaultListModel model;
 
@@ -127,10 +128,9 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 	public QTIEditor() {
 		super();
 		initialize();
-		// init JFileChooser in separated thread
-		ProgressBar bar = new ProgressBar(this);
-		bar.setVisible(true);
-		bar.setLocationRelativeTo(this);
+		// initialize JFileChooser and JProgressBar in separated threads
+		//new Thread(){public void run(){bar = new ProgressBar(QTIEditor.this);}}.start(); 
+		//bar.setLocationRelativeTo(QTIEditor.this);
 		new Thread(){public void run() { createJFileChooser(); } }.start();
 	}
 
@@ -394,7 +394,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		    	  String fileName = saveFile(true);
 		    	  if(fileName != null)
 			    	{
-		    	  
+		    		  // bar.setVisible(true);
 			    	  try {
 			    		  if(!fileName.contains(".xml"))
 							  questionList.get(currentSelected).saveToXML(fileName + ".xml");
@@ -406,6 +406,8 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 			    	    {
 							e1.printStackTrace();
 						}
+			    	   //bar.setVisible(false);
+			    	   JOptionPane.showMessageDialog(null, "Zapis zakonczony pomyslnie !", "INFO", JOptionPane.INFORMATION_MESSAGE); 
 		            }
 		      }
 		      });
@@ -539,7 +541,8 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 				    {
 				    	String path = saveFile(false);
 				    	if(path != null)
-				    	{
+				    	{ 
+				    		//bar.setVisible(true);
 							for(int all = 0; all < questionList.size(); all++)
 							{
 								try {
@@ -547,7 +550,9 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 								} catch (XmlSaveException e1) {
 									e1.printStackTrace();
 								}
+								//bar.setVisible(false);
 							}
+							JOptionPane.showMessageDialog(null, "Zapis zakonczony pomyslnie !", "INFO", JOptionPane.INFORMATION_MESSAGE); 
 				    	}
 				    } else if (response == JOptionPane.CLOSED_OPTION)
 				    {
@@ -560,6 +565,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 			String path = saveFile(false);
 			if(path != null)
 	    	{
+				//bar.setVisible(true);
 				for(int sel : questionsList.getSelectedIndices())
 				{
 					try {
@@ -567,7 +573,9 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 					} catch (XmlSaveException e1) {
 						e1.printStackTrace();
 					}
+				//bar.setVisible(false);
 				}
+				JOptionPane.showMessageDialog(null, "Zapis zakonczony pomyslnie !", "INFO", JOptionPane.INFORMATION_MESSAGE); 
 	    	}
 		}
 		else if(source == exitEditorItem)
@@ -583,6 +591,7 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		AbstractQuestionPanel panel = null;
         if (returnVal == JFileChooser.APPROVE_OPTION) 
         {
+        	//bar.setVisible(true);
             File[] file = fc.getSelectedFiles();
             for(File f : file)
             {
@@ -597,10 +606,11 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
             	else
             		 addQuestion(f, panel );
             }
+            //bar.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Odczyt zakonczony pomyslnie !", "INFO", JOptionPane.INFORMATION_MESSAGE); 
         } 
         else 
         {
-        	
         }
 	}
 
