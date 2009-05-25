@@ -389,18 +389,21 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		      public void actionPerformed(ActionEvent e)
 		      {
 		    	  String fileName = saveFile(true);
+		    	  if(fileName != null)
+			    	{
 		    	  
-		    	  try {
-		    		  if(!fileName.contains(".xml"))
-						  questionList.get(currentSelected).saveToXML(fileName + ".xml");
-		    		  else
-		    		      questionList.get(currentSelected).saveToXML(fileName);
-					
-					}
-		    	   catch (XmlSaveException e1) 
-		    	    {
-						e1.printStackTrace();
-					}
+			    	  try {
+			    		  if(!fileName.contains(".xml"))
+							  questionList.get(currentSelected).saveToXML(fileName + ".xml");
+			    		  else
+			    		      questionList.get(currentSelected).saveToXML(fileName);
+						
+						}
+			    	   catch (XmlSaveException e1) 
+			    	    {
+							e1.printStackTrace();
+						}
+		            }
 		      }
 		      });
 	}
@@ -532,14 +535,17 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 				else if (response == JOptionPane.YES_OPTION) 
 				    {
 				    	String path = saveFile(false);
-						for(int all = 0; all < questionList.size(); all++)
-						{
-							try {
-								questionList.get(all).saveToXML(path + (String)model.getElementAt(all) + ".xml");
-							} catch (XmlSaveException e1) {
-								e1.printStackTrace();
+				    	if(path != null)
+				    	{
+							for(int all = 0; all < questionList.size(); all++)
+							{
+								try {
+									questionList.get(all).saveToXML(path + (String)model.getElementAt(all) + ".xml");
+								} catch (XmlSaveException e1) {
+									e1.printStackTrace();
+								}
 							}
-						}
+				    	}
 				    } else if (response == JOptionPane.CLOSED_OPTION)
 				    {
 				      System.out.println("JOptionPane closed");
@@ -549,14 +555,17 @@ public class QTIEditor extends JFrame implements MouseListener, ListSelectionLis
 		else if(source == saveSelectedItem)
 		{
 			String path = saveFile(false);
-			for(int sel : questionsList.getSelectedIndices())
-			{
-				try {
-					questionList.get(sel).saveToXML(path + (String)model.getElementAt(sel) + ".xml");
-				} catch (XmlSaveException e1) {
-					e1.printStackTrace();
+			if(path != null)
+	    	{
+				for(int sel : questionsList.getSelectedIndices())
+				{
+					try {
+						questionList.get(sel).saveToXML(path + (String)model.getElementAt(sel) + ".xml");
+					} catch (XmlSaveException e1) {
+						e1.printStackTrace();
+					}
 				}
-			}
+	    	}
 		}
 		else if(source == exitEditorItem)
 		{
