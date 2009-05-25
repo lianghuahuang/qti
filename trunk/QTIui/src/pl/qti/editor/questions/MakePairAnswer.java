@@ -15,7 +15,7 @@ public class MakePairAnswer {
 	
 	public MakePairAnswer(String lhs, String rhs, double score, boolean correct) {
 		super();
-		LHS = lhs;
+		LHS = lhs; 
 		RHS = rhs;
 		this.score = score;
 		this.correct = correct;
