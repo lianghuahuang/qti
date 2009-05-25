@@ -114,6 +114,8 @@ public class PairQuestionFactory extends AbstractQuestionFactory {
 			Element simple = doc.createElement("simpleAssociableChoice");
 			simple.setAttribute(SaveQuestionUtility.IDENTIFIER, i+"");
 			simple.setAttribute("matchMax", counts[i]+"");
+			if(a.isFixed())
+				simple.setAttribute("fixed", "true");
 			simple.setTextContent(a.getValue());
 			itemBody.appendChild(simple);
 			i++;
