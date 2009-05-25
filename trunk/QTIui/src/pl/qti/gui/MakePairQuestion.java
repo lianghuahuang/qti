@@ -26,6 +26,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import pl.qti.editor.exceptions.XmlSaveException;
+import pl.qti.editor.questions.SimpleAnswer;
 
 
 public class MakePairQuestion extends AbstractQuestionPanel implements ActionListener, TableModelListener{
@@ -585,7 +586,26 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
         }
     }
 
-
+	public void setAnswers(ArrayList<SimpleAnswer> list, ArrayList<Integer> orderInserted)
+	{
+		int row = 0;
+		for(SimpleAnswer answer : list)
+		{
+			answersTableModel.insertRow(row, new Object[]  {row + 1,answer.getValue(), answer.isFixed() });
+			row++;
+		}
+		
+		for(Integer order : orderInserted)
+		{
+			//listModel.addElement(list.get(order).getValue());
+			//pairTableModel.insertRow(row, new Object[]  {row + 1,answer.getValue(), answer.isFixed() });
+			
+//			boxEditor = new MyComboBoxEditor(answers);
+//        	pairTable.getColumnModel().getColumn(0).setCellEditor(boxEditor);
+//        	pairTable.getColumnModel().getColumn(1).setCellEditor(boxEditor);
+		}
+		count = row;
+	}
 
 
 }
