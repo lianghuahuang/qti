@@ -26,6 +26,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import pl.qti.editor.exceptions.XmlSaveException;
+import pl.qti.editor.questions.MakePairAnswer;
 import pl.qti.editor.questions.SimpleAnswer;
 
 
@@ -586,16 +587,16 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
         }
     }
 
-	public void setAnswers(ArrayList<SimpleAnswer> list, ArrayList<Integer> orderInserted)
+	public void setAnswers(ArrayList<SimpleAnswer> answerList, ArrayList<MakePairAnswer> pairList)
 	{
 		int row = 0;
-		for(SimpleAnswer answer : list)
+		for(SimpleAnswer answer : answerList)
 		{
 			answersTableModel.insertRow(row, new Object[]  {row + 1,answer.getValue(), answer.isFixed() });
 			row++;
 		}
 		
-		for(Integer order : orderInserted)
+		for(MakePairAnswer order : pairList)
 		{
 			//listModel.addElement(list.get(order).getValue());
 			//pairTableModel.insertRow(row, new Object[]  {row + 1,answer.getValue(), answer.isFixed() });
