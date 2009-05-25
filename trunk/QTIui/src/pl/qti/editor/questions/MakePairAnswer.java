@@ -26,13 +26,13 @@ public class MakePairAnswer {
 	} 
 
 	public String getLHS() { 
-	 return LHS; 
+	 return LHS.trim(); 
 	} 
 	public void setLHS(String lhs) { 
 	 LHS = lhs; 
 	} 
 	public String getRHS() { 
-	 return RHS; 
+	 return RHS.trim(); 
 	} 
 	public void setRHS(String rhs) { 
 	 RHS = rhs; 
