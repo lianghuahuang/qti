@@ -648,7 +648,7 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 			answerList.add(answer);
 		}
 		
-		for(int i = 0; i < answersTableModel.getRowCount(); i++)
+		for(int i = 0; i < pairTableModel.getRowCount(); i++)
 		{
 			pair = new MakePairAnswer();
 			pair.setLHS((String)pairTableModel.getValueAt(i, 0));
