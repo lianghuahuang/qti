@@ -36,7 +36,7 @@ public class QuestionsUtilities {
 		HashMap<String, SimpleAnswer> choicesMap = new HashMap<String, SimpleAnswer>();
 		for(int i=0; i<choices.getLength();i++)
 		{
-			SimpleAnswer sa = new SimpleAnswer(choices.item(i).getNodeValue().trim());
+			SimpleAnswer sa = new SimpleAnswer(choices.item(i).getTextContent().trim());
 			Node fixed = choices.item(i).getAttributes().getNamedItem("fixed");
 			if(fixed!=null && fixed.getNodeValue().equalsIgnoreCase("true"))
 				sa.setFixed(true);
