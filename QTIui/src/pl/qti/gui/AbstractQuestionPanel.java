@@ -259,6 +259,7 @@ public abstract class AbstractQuestionPanel extends JPanel{
 	public void setTitle(String title) {
 	    model = (DefaultListModel)editor.getQuestionsList().getModel();
 		model.addElement(title);
+		questionName = title;
 	}
 
 	public void setText(String text) {
