@@ -13,6 +13,14 @@ public class MakePairAnswer {
 		RHS = rhs;
 	}
 	
+	public MakePairAnswer(String lhs, String rhs, double score, boolean correct) {
+		super();
+		LHS = lhs;
+		RHS = rhs;
+		this.score = score;
+		this.correct = correct;
+	}
+
 	public String getLHS() {
 		return LHS;
 	}
