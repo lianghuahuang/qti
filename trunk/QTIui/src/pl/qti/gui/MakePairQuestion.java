@@ -152,10 +152,6 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 			pairColumn.setPreferredWidth(95);
 			pairColumn.setMaxWidth(95);
 			pairColumn.setResizable(false);
-			pairColumn = pairTable.getColumnModel().getColumn(3);
-			pairColumn.setPreferredWidth(95);
-			pairColumn.setMaxWidth(95);
-			pairColumn.setResizable(false);
 		}
 		return pairTable;
 	}
@@ -355,7 +351,7 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 		{
 			System.out.println(pairTableModel.pairDataVector.size());
 			if(answers.size() != 0)
-			  pairTableModel.insertRow(pairTable.getRowCount(),new Object[]  {"", "", new Boolean(false) , 0.0});
+			  pairTableModel.insertRow(pairTable.getRowCount(),new Object[]  {"", "", 0.0});
 		}
 	}
 
@@ -486,7 +482,7 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 	class PairTableModel extends AbstractTableModel {
 		private static final long serialVersionUID = 2L;
 
-		private String[] columnNames = {"ELEMENTS", "PAIR", "CORRECT", "SCORE"};
+		private String[] columnNames = {"ELEMENTS", "PAIR", "SCORE"};
 		
 		Vector<Vector> pairDataVector = new Vector<Vector>();
 
@@ -601,7 +597,7 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 		row = 0;
 		for(MakePairAnswer pair : pairList)
 		{
-			pairTableModel.insertRow(row, new Object[]  {row + 1,pair.getLHS(), pair.getRHS(), pair.isCorrect(), pair.getScore() });
+			pairTableModel.insertRow(row, new Object[]  {pair.getLHS(), pair.getRHS(), pair.getScore() });
 			row++;
 			boxEditor = new MyComboBoxEditor(answers);
         	pairTable.getColumnModel().getColumn(0).setCellEditor(boxEditor);
@@ -629,7 +625,6 @@ public class MakePairQuestion extends AbstractQuestionPanel implements ActionLis
 			pair = new MakePairAnswer();
 			pair.setLHS((String)pairTableModel.getValueAt(i, 0));
 			pair.setRHS((String)pairTableModel.getValueAt(i, 1));
-			pair.setCorrect((Boolean)pairTableModel.getValueAt(i, 2));
 			pair.setScore((Double)pairTableModel.getValueAt(i, 3));
 			pairList.add(pair);
 		}
