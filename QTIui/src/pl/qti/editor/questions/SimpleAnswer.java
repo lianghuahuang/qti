@@ -5,6 +5,9 @@ public class SimpleAnswer {
 	protected String value;
 	protected boolean fixed = false;
 
+	public SimpleAnswer()
+	{
+	}
 	public SimpleAnswer(String val)
 	{
 		this.value = val;
