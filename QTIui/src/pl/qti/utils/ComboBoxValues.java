@@ -15,7 +15,7 @@ public class ComboBoxValues {
 			add("Multiple Question");
 			add("Yes No Question");
 			add("Open Question");
-			add("Fill in blank Question");
+			//add("Fill in blank Question");
 			add("Correcr Order Question");
 			add("Make Pair Question");
 		}
