@@ -53,8 +53,21 @@ public class PairQuestionFactory extends AbstractQuestionFactory {
 		return panel;
 	}
 	
-	public void saveQuestion(ArrayList<SimpleAnswer> answers, ArrayList<MakePairAnswer> pairs, String title, String question, String defaultValue) throws XmlSaveException
+	public static void saveQuestion(ArrayList<SimpleAnswer> answers, ArrayList<MakePairAnswer> pairs, String title, String question, String defaultValue, String filename) throws XmlSaveException
 	{
+		HashMap<String, Integer> answersKeys = new HashMap<String, Integer>();
+		int i=0;
+		for(SimpleAnswer a: answers)
+		{
+			answersKeys.put(a.getValue(), i);
+			i++;
+		}
+		Integer[] counts = new Integer[answers.size()];
+		for(MakePairAnswer a: pairs)
+		{
+			counts[answersKeys.get(a.getLHS())]++;
+			counts[answersKeys.get(a.getRHS())]++;
+		}
 		SaveQuestionUtility.init();
 		Document doc = SaveQuestionUtility.getDoc();
 		
@@ -66,10 +79,55 @@ public class PairQuestionFactory extends AbstractQuestionFactory {
 		
 		Element response = SaveQuestionUtility.createResponse(doc, "multiple", "pair");	
 		Element correctResponse = doc.createElement(SaveQuestionUtility.CORRECT_RESPONSE);	
-		
 		Element mapping = doc.createElement(SaveQuestionUtility.MAPPING);
+		mapping.setAttribute(SaveQuestionUtility.DEFAULTV, defaultValue);
 		
-		Element outcome = SaveQuestionUtility.createOutcome(doc, "single", "float");		
+		for(MakePairAnswer a:pairs)
+		{
+			Element val = doc.createElement(SaveQuestionUtility.VALUE);
+			String corrAns = answersKeys.get(a.getLHS())+" "+answersKeys.get(a.getRHS());
+			val.setTextContent(corrAns);
+			correctResponse.appendChild(val);
+			Element mapEntry = doc.createElement(SaveQuestionUtility.MAPENTRY);
+			mapEntry.setAttribute("mapKey", corrAns);
+			mapEntry.setAttribute("mappedValue", a.getScore()+"");
+			mapping.appendChild(mapEntry);
+		}
+		
+		response.appendChild(correctResponse);
+		response.appendChild(mapping);
+		
+		Element itemBody = doc.createElement(SaveQuestionUtility.ITEMB);
+		Element extended = doc.createElement("associateInteraction");
+		extended.setAttribute("responseIdentifier", "RESPONSE");
+		extended.setAttribute("shuffle", "true");
+		extended.setAttribute("maxAssociations", pairs.size()+"");
+		
+		Element prompt = doc.createElement(SaveQuestionUtility.PROMPT);
+		prompt.setTextContent(question);
+		extended.appendChild(prompt);
+		
+		itemBody.appendChild(extended);
+		i=0;
+		for(SimpleAnswer a:answers)
+		{
+			Element simple = doc.createElement("simpleAssociableChoice");
+			simple.setAttribute(SaveQuestionUtility.IDENTIFIER, i+"");
+			simple.setAttribute("matchMax", counts[i]+"");
+			simple.setTextContent(a.getValue());
+			itemBody.appendChild(simple);
+			i++;
+		}
+		
+		Element outcome = SaveQuestionUtility.createOutcome(doc, "single", "float");	
+		assessmentItem.appendChild(outcome);
+		assessmentItem.appendChild(itemBody);
+		
+		Element responseProc = doc.createElement(SaveQuestionUtility.RESPONSE_PROC);
+		responseProc.setAttribute("template", "http://www.imsglobal.org/question/qti_v2p0/rptemplates/map_response");
+
+		assessmentItem.appendChild(responseProc);
+		SaveQuestionUtility.save(doc, filename);
 	}
 	
 	
