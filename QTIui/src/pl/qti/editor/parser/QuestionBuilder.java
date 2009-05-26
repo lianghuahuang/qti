@@ -45,7 +45,7 @@ public class QuestionBuilder {
 	        try {
 				document = parser.parse(questionFile.getAbsolutePath());
 			} catch (Exception e) {
-				// logger
+				throw new InvalidXmlException(e.getMessage());
 			}
 	        NodeList elements = document.getElementsByTagName(recognitionTag);
 	        NamedNodeMap attributes = elements.item(0).getAttributes();
