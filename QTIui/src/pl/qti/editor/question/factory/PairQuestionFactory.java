@@ -2,6 +2,7 @@ package pl.qti.editor.question.factory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -31,9 +32,10 @@ public class PairQuestionFactory extends AbstractQuestionFactory {
 		MakePairQuestion panel = (MakePairQuestion) this.questionPanel;
 		NodeList mappingList = questionXml.getElementsByTagName("mapEntry");
 		ArrayList<SimpleAnswer> sa = new ArrayList<SimpleAnswer>();
-		for(String key:associations.keySet())
+		Object[] keys = associations.keySet().toArray();
+		for(int i=keys.length-1;i>=0;i--)
 		{
-			sa.add(associations.get(key));
+			sa.add(associations.get(keys[i]));
 		}
 		
 		ArrayList<MakePairAnswer> answers = new ArrayList<MakePairAnswer>();
